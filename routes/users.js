@@ -12,6 +12,19 @@ router.post('/getUser', function(req, res, next) {
   });
 });
 
+router.get('/list', (req,res) => {
+  User.find((err, docs) => {
+    if(!err){
+      res.send({
+        list: docs
+      });
+    }
+    else {
+      console.log('Failed to retrieve the Course List: '+ err);
+    }
+  });
+});
+
 router.post('/register', function (req, res, next) {
   var First_Name = req.body.First_Name;
   var Last_Name = req.body.Last_Name;
@@ -33,16 +46,16 @@ router.post('/register', function (req, res, next) {
 
   User.createUser(newUser, function (error, user) {
     if (error) {
-      common(res, error, error, null);
+      common(res, error, error, newUser);
     }
     else {
-      common(res, error, error, null);
+      common(res, error, error, newUser);
     }
   });
 });
 
 
-router.get('/about', function (req, res) {
+router.post('/about', function (req, res) {
   res.send('About this wiki');
 });
 
