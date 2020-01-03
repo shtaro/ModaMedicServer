@@ -3,13 +3,13 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-//var bcrypt = require('bcryptjs');
 
+var Questionnaires = require('../modules/Questionnaire');
 //Define a schema
 var Schema = mongoose.Schema;
 
 var UserSchema = new Schema({
-    user_id : {
+    UserID : {
         type:String,
         index:true,
         unique: true
@@ -31,12 +31,15 @@ var UserSchema = new Schema({
     },
     Type:{
         type:String
-    }
+    },
+    Questionnaires: [{
+        type: String
+    }]
 
 });
 
 //create models
-var User = module.exports = mongoose.model('User', UserSchema);
+var User = module.exports = mongoose.model('User', UserSchema,'User');
 
 
 
@@ -53,7 +56,7 @@ module.exports.createUser = function(newUser, callback){
 
 //gets user from db by username
 module.exports.getUserByUserID = function(username, callback){
-    var query = {user_id: username};
+    var query = {UserID: username};
     User.findOne(query, callback);
 };
 
