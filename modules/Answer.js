@@ -1,23 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
-var bcrypt = require('bcryptjs');
 
 
 //Define a schema
 var Schema = mongoose.Schema;
 
-var AnswerSchema = new Schema({
+var DailyAnswerSchema = new Schema({
     UserID: String,
     Timestamp: Number,
-    Questionnaire_ID: Number,
+    ValidDate: Number,
+    QuestionnaireID: Number,
     Answers: [{
         QuestionID: Number,
-        AnswerID: Number
+        AnswerID: [
+            {
+                type: Number
+            }
+        ]
     }]
 });
 
 //create models
-var Answer = module.exports = mongoose.model('Answer', AnswerSchema, 'Answer');
+module.exports.DailyAnswer = mongoose.model('DailyAnswer', DailyAnswerSchema, 'DailyAnswer');
 
 

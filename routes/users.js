@@ -4,9 +4,8 @@ var User = require('../modules/User');
 var common = require('./common');
 
 
-
 router.post('/getUser', function(req, res, next) {
-  var userid = req.body.user_id;
+  let userid = req.body.UserID;
   User.getUserByUserID(userid, function (err, user) {
     common(res, err, null, user);
   });
@@ -26,31 +25,20 @@ router.get('/list', (req,res) => {
 });
 
 router.post('/register', function (req, res, next) {
-  var First_Name = req.body.First_Name;
-  var Last_Name = req.body.Last_Name;
-  var user_id = req.body.user_id;
-  var Password = req.body.Password;
-  var Type = req.body.Type;
-  var birthDate = req.body.BirthDate;
-  var email = req.body.Email;
 
-  var newUser = new User({
-    user_id: user_id,
-    Password: Password,
-    First_Name: First_Name,
-    Last_Name: Last_Name,
-    BirthDate: birthDate,
-    Email: email,
-    Type: Type
+  let newUser = new User({
+    UserID: req.body.UserID,
+    Password: req.body.Password,
+    First_Name: req.body.First_Name,
+    Last_Name: req.body.Last_Name,
+    BirthDate: new Date(req.body.BirthDate, ),
+    Email: req.body.Email,
+    Type: req.body.Type,
+    Questionnaires: req.body.Questionnaires
   });
 
   User.createUser(newUser, function (error, user) {
-    if (error) {
       common(res, error, error, newUser);
-    }
-    else {
-      common(res, error, error, newUser);
-    }
   });
 });
 

@@ -8,7 +8,8 @@ var CaloriesMetric = require('../modules/Metrics').CaloriesMetric;
 
 router.post('/steps', function (req, res, next) {
     let newMetric = new StepsMetric({
-        UserID: req.body.UserID,
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
         Timestamp: (new Date).getTime(),
         Steps: req.body.Steps
     });
@@ -19,7 +20,8 @@ router.post('/steps', function (req, res, next) {
 
 router.post('/distance', function (req, res, next) {
     let newMetric = new DistanceMetric({
-        UserID: req.body.UserID,
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
         Timestamp: (new Date).getTime(),
         Distance: req.body.Distance
     });
@@ -30,7 +32,8 @@ router.post('/distance', function (req, res, next) {
 
 router.post('/steps', function (req, res, next) {
     let newMetric = new CaloriesMetric({
-        UserID: req.body.UserID,
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
         Timestamp: (new Date).getTime(),
         Calories: req.body.Calories
     });
@@ -40,21 +43,21 @@ router.post('/steps', function (req, res, next) {
 });
 
 
-router.get('/steps', function (req, res, next) {
-
+router.get('/getSteps', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
 
-    users = req.query.Username;
-    if (!(req.query.Username instanceof Array))
-        users = [req.query.Username];
-
+    let users = req.query.UserID;
+    /*
+    if (!(req.query.UserID instanceof Array))
+        users = [req.query.UserID];
+    */
     StepsMetric.find({
-            'UserID': { $in: users },
-            'Timestamp': { $gte: req.query.start_time, $lte: req.query.end_time }
+            UserID: { $in: users },
+            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);

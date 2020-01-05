@@ -14,26 +14,14 @@ var UserSchema = new Schema({
         index:true,
         unique: true
     },
-    Password: {
-        type:String
-    },
-    First_Name: {
-        type:String
-    },
-    Last_Name: {
-        type:String
-    },
-    BirthDate: {
-        type:Date
-    },
-    Email: {
-        type:String
-    },
-    Type:{
-        type:String
-    },
+    Password: String,
+    First_Name: String,
+    Last_Name: String,
+    BirthDate: Date,
+    Email: String,
+    Type: String,
     Questionnaires: [{
-        type: String
+        QuestionnaireText: String
     }]
 
 });
