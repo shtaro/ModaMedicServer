@@ -20,18 +20,21 @@ router.get('/getLastDaily', function(req, res, next){
 });
 
 router.get('/getDailyAnswers', function (req, res, next) {
-    let userid = req.body.UserID;
-    let date = req.body.Date;
-
+    if (typeof (req.query.start_time) == 'undefined') {
+        req.query.start_time = 0;
+        req.query.end_time = (new Date).getTime();
+    }
+    /*TODO: change UserID to token*/
+    let userid = "111111111";
     DailyAnswer.find({
-            UserID:  userid ,
-            ValidDate: date
+            UserID: userid,
+            QuestionnaireID: "0",
+            ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
         , (function (err, docs) {
             common(res, err, err, docs);
         }));
 });
-
 
 /* POST answers to daily */
 router.post('/daily_answers', function (req, res, next) {

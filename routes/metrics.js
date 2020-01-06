@@ -30,7 +30,7 @@ router.post('/distance', function (req, res, next) {
     });
 });
 
-router.post('/steps', function (req, res, next) {
+router.post('/calories', function (req, res, next) {
     let newMetric = new CaloriesMetric({
         /*TODO: change UserID to token*/
         UserID: "111111111",
@@ -42,21 +42,50 @@ router.post('/steps', function (req, res, next) {
     });
 });
 
-
 router.get('/getSteps', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
-
-    let users = req.query.UserID;
-    /*
-    if (!(req.query.UserID instanceof Array))
-        users = [req.query.UserID];
-    */
+    /*TODO: change UserID to token*/
+    let userid = "111111111";
     StepsMetric.find({
-            UserID: { $in: users },
+            UserID: userid,
+            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+        }
+        , (function (err, docs) {
+            common(res, err, err, docs);
+        }));
+});
+
+router.get('/getDistance', function (req, res, next) {
+    //if dates were not specified - query for all dates
+    if (typeof(req.query.start_time) == 'undefined') {
+        req.query.start_time = 0;
+        req.query.end_time = (new Date).getTime();
+    }
+    /*TODO: change UserID to token*/
+    let user = "111111111";
+    DistanceMetric.find({
+            UserID: user,
+            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+        }
+        , (function (err, docs) {
+            common(res, err, err, docs);
+        }));
+});
+
+router.get('/getCalories', function (req, res, next) {
+    //if dates were not specified - query for all dates
+    if (typeof(req.query.start_time) == 'undefined') {
+        req.query.start_time = 0;
+        req.query.end_time = (new Date).getTime();
+    }
+    /*TODO: change UserID to token*/
+    let user = "111111111";
+    CaloriesMetric.find({
+            UserID: user,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
