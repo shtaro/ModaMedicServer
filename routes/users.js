@@ -11,8 +11,8 @@ router.post('/getUser', function(req, res, next) {
   });
 });
 
-router.get('/getUserQuestionnaire', function(req, res, next) {
-  let userid = "111111111";
+router.get('/getUserQuestionnaire/:userID', function(req, res, next) {
+  let userid = req.params.userID;
   User.findOne({UserID: userid}, function (err, user) {
     common(res, err, err, user.Questionnaires);
   });

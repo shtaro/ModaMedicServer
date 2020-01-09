@@ -12,7 +12,21 @@ var getDate = function (timestamp) {
     return date_string;
 };
 
-var getScore = function (QuestionnaireID) {
+var getScore = function (QuestionnaireID, Answers) {
+    var score=0;
+    switch(QuestionnaireID){
+        case "1":
+            Answers.forEach(function(answer){
+                if(answer.AnswerID.length==1) {
+                    score = score + answer.AnswerID[0];
+                }
+                else{
+                    /*TODO */
+                }
+            });
+            score = score*2;
+    }
+    return score;
 };
 
 router.get('/getLastDaily', function(req, res, next){
@@ -23,21 +37,38 @@ router.get('/getLastDaily', function(req, res, next){
     });
 });
 
-router.get('/getDailyAnswers', function (req, res, next) {
+router.get('/getDailyAnswers/:userID', function (req, res, next) {
     if (typeof (req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
-    /*TODO: change UserID to token*/
-    let userid = "111111111";
     DailyAnswer.find({
-            UserID: userid,
+            UserID: req.params.userID,
             QuestionnaireID: 0,
             ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
         , (function (err, docs) {
             common(res, err, err, docs);
         }));
+});
+
+router.get('/getPeriodicAnswers/:userID/:QuestionnaireID', function (req, res, next) {
+    if (typeof (req.query.start_time) == 'undefined') {
+        req.query.start_time = 0;
+        req.query.end_time = (new Date).getTime();
+    }
+    var ansArr=[];
+    PeriodicAnswer.find({
+            UserID: req.params.userID,
+            QuestionnaireID: req.params.QuestionnaireID,
+            ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
+        }
+        , (function (err, docs) {
+            docs.forEach(function(answer){
+                ansArr.push(docs.Score,docs.ValidDate)
+            })
+        }));
+    common(res, null, null, ansArr);
 });
 
 /* POST answers to daily */
@@ -60,7 +91,7 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
             ValidDate: req.body.ValidDate,
             QuestionnaireID: req.params.QuestionnaireID,
             Answers: req.body.Answers,
-            Score: getScore(req.params.QuestionnaireID)
+            Score: getScore(req.params.QuestionnaireID, req.body.Answers)
         });
     }
     newAnswer.save(function (error) {

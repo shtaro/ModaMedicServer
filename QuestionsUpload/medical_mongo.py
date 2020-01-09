@@ -25,20 +25,19 @@ def insert_to_collection(collenctin_name, questionnaire):
     collection.insert(questionnaire)
 
 
-# English
 def upload_periodic_questionnaire():
-    file_path = 'PRIMARY_EN.json'
+    file_path = 'ODIQuestionnaire.json'
     questions = questions_from_file(file_path)
     if len(questions) > 0:
-        dropCollection("PrimaryQuestionEnglish")
-        insert_to_collection("PrimaryQuestionEnglish", questions)
+        #dropCollection("Questionnaire")
+        insert_to_collection("Questionnaire", questions)
 
 
 def upload_daily_questionnaire():
     file_path = 'DailyQuestionnaire.json'
     questions = questions_from_file(file_path)
     if len(questions) > 0:
-        # dropCollection("Questionnaire")
+        #dropCollection("Questionnaire")
         insert_to_collection("Questionnaire", questions)
 
 
@@ -55,6 +54,8 @@ if __name__ == '__main__':
     parser.add_argument("--primary", help="update primary questions", action='store_true')
     parser.add_argument("--all", help="update all questions", action='store_true')
     args = parser.parse_args()
+    upload_periodic_questionnaire()
+    print("periodic uploaded")
     upload_daily_questionnaire()
     print("daily uploaded")
     sys.stdout.flush()
