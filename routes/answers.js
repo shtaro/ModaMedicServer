@@ -52,23 +52,26 @@ router.get('/getDailyAnswers/:userID', function (req, res, next) {
         }));
 });
 
-router.get('/getPeriodicAnswers/:userID/:QuestionnaireID', function (req, res, next) {
+router.get('/getPeriodicAnswers/:UserID/:QuestionnaireID', function (req, res, next) {
     if (typeof (req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
     var ansArr=[];
     PeriodicAnswer.find({
-            UserID: req.params.userID,
+            UserID: req.params.UserID,
             QuestionnaireID: req.params.QuestionnaireID,
             ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
         , (function (err, docs) {
             docs.forEach(function(answer){
-                ansArr.push(docs.Score,docs.ValidDate)
+                ansArr.push({
+                    "Score": answer.Score,
+                    "ValidDate": answer.ValidDate
+                })
             })
+            common(res, err, err, ansArr);
         }));
-    common(res, null, null, ansArr);
 });
 
 /* POST answers to daily */

@@ -13,6 +13,18 @@ var metricsRouter = require('./routes/metrics');
 var answersRouter = require('./routes/answers');
 
 var app = express();
+var cors = require('cors');
+
+
+app.use(cors());
+
+app.use("/",indexRouter,  function (req, res, next) {
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type,x-auth-token, Access-Control-Allow-Headers, X-Requested-With');
+  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,PUT,DELETE, OPTIONS');
+
+  next();
+});
 
 app.use(bodyparser.urlencoded({
   extended: true
@@ -46,7 +58,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+//app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/questionnaires', questionnairesRouter);
 app.use('/metrics', metricsRouter);
