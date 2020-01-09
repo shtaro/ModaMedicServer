@@ -11,7 +11,7 @@ router.post('/steps', function (req, res, next) {
         /*TODO: change UserID to token*/
         UserID: "111111111",
         Timestamp: (new Date).getTime(),
-        Steps: req.body.Steps
+        Data: req.body.Data
     });
     newMetric.save(function (error) {
         common(res, error, error, newMetric);
@@ -23,7 +23,7 @@ router.post('/distance', function (req, res, next) {
         /*TODO: change UserID to token*/
         UserID: "111111111",
         Timestamp: (new Date).getTime(),
-        Distance: req.body.Distance
+        Data: req.body.Data
     });
     newMetric.save(function (error) {
         common(res, error, error, newMetric);
@@ -35,7 +35,7 @@ router.post('/calories', function (req, res, next) {
         /*TODO: change UserID to token*/
         UserID: "111111111",
         Timestamp: (new Date).getTime(),
-        Calories: req.body.Calories
+        Data: req.body.Data
     });
     newMetric.save(function (error) {
         common(res, error, error, newMetric);

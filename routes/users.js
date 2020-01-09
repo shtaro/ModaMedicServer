@@ -7,7 +7,14 @@ var common = require('./common');
 router.post('/getUser', function(req, res, next) {
   let userid = req.body.UserID;
   User.getUserByUserID(userid, function (err, user) {
-    common(res, err, null, user);
+    common(res, err, err, user);
+  });
+});
+
+router.get('/getUserQuestionnaire', function(req, res, next) {
+  let userid = "111111111";
+  User.findOne({UserID: userid}, function (err, user) {
+    common(res, err, err, user.Questionnaires);
   });
 });
 

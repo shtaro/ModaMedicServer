@@ -3,12 +3,16 @@ var router = express.Router();
 var mongoose = require('mongoose');
 var common = require('./common');
 var DailyAnswer = require('../modules/Answer').DailyAnswer;
+var PeriodicAnswer = require('../modules/Answer').PeriodicAnswer;
 
 
 var getDate = function (timestamp) {
     date = new Date(timestamp).toISOString();
     date_string = date.slice(0, 10) + ' ' + date.slice(-13, -8)
     return date_string;
+};
+
+var getScore = function (QuestionnaireID) {
 };
 
 router.get('/getLastDaily', function(req, res, next){
@@ -28,7 +32,7 @@ router.get('/getDailyAnswers', function (req, res, next) {
     let userid = "111111111";
     DailyAnswer.find({
             UserID: userid,
-            QuestionnaireID: "0",
+            QuestionnaireID: 0,
             ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
         , (function (err, docs) {
@@ -37,15 +41,28 @@ router.get('/getDailyAnswers', function (req, res, next) {
 });
 
 /* POST answers to daily */
-router.post('/daily_answers', function (req, res, next) {
-    let newAnswer = new DailyAnswer({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
-        Timestamp: (new Date).getTime(),
-        ValidDate: req.body.ValidDate,
-        QuestionnaireID : req.body.QuestionnaireID,
-        Answers: req.body.Answers
-    });
+router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
+    if(req.params.QuestionnaireID==0) {
+        var newAnswer = new DailyAnswer({
+            /*TODO: change UserID to token*/
+            UserID: "111111111",
+            Timestamp: (new Date).getTime(),
+            ValidDate: req.body.ValidDate,
+            QuestionnaireID: req.params.QuestionnaireID,
+            Answers: req.body.Answers
+        });
+    }
+    else{
+        var newAnswer = new PeriodicAnswer({
+            /*TODO: change UserID to token*/
+            UserID: "111111111",
+            Timestamp: (new Date).getTime(),
+            ValidDate: req.body.ValidDate,
+            QuestionnaireID: req.params.QuestionnaireID,
+            Answers: req.body.Answers,
+            Score: getScore(req.params.QuestionnaireID)
+        });
+    }
     newAnswer.save(function (error) {
         common(res, error, error, newAnswer);
     });

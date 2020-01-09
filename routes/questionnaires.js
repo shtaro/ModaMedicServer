@@ -5,8 +5,8 @@ var common = require('./common');
 var Questionnaire = require('../modules/Questionnaire');
 
 
-router.get('/daily_questionnaire', function (req, res, next) {
-    Questionnaire.getDaily(function (err, questionnaire) {
+router.get('/getQuestionnaire/:QuestionnaireID', function (req, res, next) {
+    Questionnaire.getQuestionnaire(req.params.QuestionnaireID,function (err, questionnaire) {
         common(res, err, err, questionnaire);
     });
 });

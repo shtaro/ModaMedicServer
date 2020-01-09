@@ -11,17 +11,38 @@ var DailyAnswerSchema = new Schema({
     Timestamp: Number,
     ValidDate: Number,
     QuestionnaireID: Number,
-    Answers: [{
+    Answers: [
+        {
         QuestionID: Number,
         AnswerID: [
             {
                 type: Number
             }
         ]
-    }]
+        }
+    ]
+});
+
+var PeriodicAnswerSchema = new Schema({
+    UserID: String,
+    Timestamp: Number,
+    ValidDate: Number,
+    QuestionnaireID: Number,
+    Answers: [
+        {
+            QuestionID: Number,
+            AnswerID: [
+                {
+                    type: Number
+                }
+            ]
+        }
+    ],
+    Score: Number
 });
 
 //create models
 module.exports.DailyAnswer = mongoose.model('DailyAnswer', DailyAnswerSchema, 'DailyAnswer');
+module.exports.PeriodicAnswer = mongoose.model('PeriodicAnswer', PeriodicAnswerSchema, 'PeriodicAnswer');
 
 

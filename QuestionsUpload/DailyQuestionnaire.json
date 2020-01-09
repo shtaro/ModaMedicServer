@@ -3,80 +3,84 @@
     "QuestionnaireID" : 0,
     "QuestionnaireText" : "Daily",
     "Questions" :
-      [
+    [
+      {
+        "QuestionID" : 0,
+        "QuestionText":"מהי רמת הכאב הנוכחית שלך?",
+        "Type":"VAS",
+        "Best":"אין כאב בכלל",
+        "Worst":"כאב בלתי נסבל",
+        "Answers":
+        [
           {
-            "QuestionID" : 0,
-            "QuestionText":"מהי רמת הכאב הנוכחית שלך?",
-            "Type":"VAS",
-            "Answers":
-              [
-                {
-                  "answerID": 0,
-                  "answerText": "0"
-                },
-                {
-                  "answerID": 1,
-                  "answerText": "1"
-                },
-                {
-                  "answerID": 2,
-                  "answerText": "2"
-                },
-                {
-                  "answerID": 3,
-                  "answerText": "3"
-                },
-                {
-                  "answerID": 4,
-                  "answerText": "4"
-                },
-                {
-                  "answerID": 5,
-                  "answerText": "5"
-                },
-                {
-                  "answerID": 6,
-                  "answerText": "6"
-                },
-                {
-                  "answerID": 7,
-                  "answerText": "7"
-                },
-                {
-                  "answerID": 8,
-                  "answerText": "8"
-                },
-                {
-                  "answerID": 9,
-                  "answerText": "9"
-                },
-                {
-                  "answerID": 10,
-                  "answerText": "10"
-                }
-              ]
+            "answerID": 0,
+            "answerText": "0"
           },
           {
-            "QuestionID" : 1,
-            "QuestionText":"איזה סוג תרופה נטלת היום?",
-            "Type":"multi",
-            "Answers" :
-              [
-                {	"answerID" : 0,
-                  "answerText" : "בסיסית"
-                },
-                {	"answerID" : 1,
-                  "answerText" : "מתקדמת"
-                },
-                {	"answerID" : 2,
-                  "answerText" : "נרקוטית"
-                },
-                {
-                  "answerID": 3,
-                  "answerText": "לא נטלתי"
-                }
-              ]
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          },
+          {
+            "answerID": 5,
+            "answerText": "5"
+          },
+          {
+            "answerID": 6,
+            "answerText": "6"
+          },
+          {
+            "answerID": 7,
+            "answerText": "7"
+          },
+          {
+            "answerID": 8,
+            "answerText": "8"
+          },
+          {
+            "answerID": 9,
+            "answerText": "9"
+          },
+          {
+            "answerID": 10,
+            "answerText": "10"
           }
-      ]
+        ]
+      },
+      {
+        "QuestionID" : 1,
+        "QuestionText":"איזה סוג תרופה נטלת היום?",
+        "Type":"multi",
+        "Alone" : [0],
+        "Answers" :
+        [
+          {
+            "answerID": 0,
+            "answerText": "לא נטלתי"
+          },
+          {	"answerID" : 1,
+            "answerText" : "בסיסית"
+          },
+          {	"answerID" : 2,
+            "answerText" : "מתקדמת"
+          },
+          {	"answerID" : 3,
+            "answerText" : "נרקוטית"
+          }
+
+        ]
+      }
+    ]
   }
 ]

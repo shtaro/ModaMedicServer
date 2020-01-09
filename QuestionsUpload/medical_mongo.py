@@ -24,6 +24,7 @@ def insert_to_collection(collenctin_name, questionnaire):
     collection = db[collenctin_name]
     collection.insert(questionnaire)
 
+
 # English
 def upload_periodic_questionnaire():
     file_path = 'PRIMARY_EN.json'
@@ -37,9 +38,9 @@ def upload_daily_questionnaire():
     file_path = 'DailyQuestionnaire.json'
     questions = questions_from_file(file_path)
     if len(questions) > 0:
-        #dropCollection("Questionnaire")
+        # dropCollection("Questionnaire")
         insert_to_collection("Questionnaire", questions)
-        
+
 
 def dropCollection(collection_name):
     client = MongoClient('localhost', 27017)
@@ -62,20 +63,13 @@ if __name__ == '__main__':
         upload_daily_questionnaire()
         print("daily in english uploaded")
         sys.stdout.flush()
-
     if args.primary:
         upload_periodic_questionnaire()
         print("primary in english uploaded")
         sys.stdout.flush()
-
     if args.all:
         upload_daily_questionnaire()
         upload_periodic_questionnaire()
     """
     print("all uploaded")
     sys.stdout.flush()
-
-
-
-
-

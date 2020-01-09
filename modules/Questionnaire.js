@@ -14,6 +14,13 @@ var QuestionnaireSchema = new Schema({
             QuestionID: Number,
             QuestionText: String,
             Type: String,
+            Alone: [
+                {
+                type: Number
+                }
+            ],
+            Best: String,
+            Worst: String,
             Answers: [
                 {
                     answerID: Number,
@@ -30,9 +37,9 @@ var QuestionnaireSchema = new Schema({
 var Questionnaire = module.exports = mongoose.model('Questionnaire', QuestionnaireSchema, 'Questionnaire');
 
 
-module.exports.getDaily = function( callback){
-    var query = {QuestionnaireText: "Daily"};
-    Questionnaire.find(query, callback);
+module.exports.getQuestionnaire = function(qid, callback){
+    var query = {QuestionnaireID: qid};
+    Questionnaire.findOne(query, callback);
 };
 
 
