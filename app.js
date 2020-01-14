@@ -58,7 +58,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('/', indexRouter);
+//app.use('http://icc.ise.bgu.ac.il/njsw03:8103/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/questionnaires', questionnairesRouter);
 app.use('/metrics', metricsRouter);
