@@ -162,7 +162,7 @@ router.get('/getSleep', function (req, res, next) {
         }));
 });
 
-router.get('/getAccelarometer', function (req, res, next) {
+router.get('/getAccelerometer', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
