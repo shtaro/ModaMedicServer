@@ -1,0 +1,609 @@
+[
+  {
+    "QuestionnaireID" : 0,
+    "QuestionnaireText" : "Lower Extremity Functional Scale",
+    "Questions" :
+    [
+      {
+        "QuestionID" : 0,
+        "QuestionText":"מהי מידת הקושי שלך לבצע את הפעילויות הרגילות שלך במסגרת עבודתך, עבודות בית או לימודים?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 1,
+        "QuestionText":"מהי מידת הקושי שלך לבצע את התחביבים הרגילים שלך, פעילויות פנאי או פעילויות ספורטיביות?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 2,
+        "QuestionText":"מהי מידת הקושי שלך לביצוע פעולת כניסה או יציאה מהאמבטיה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 3,
+        "QuestionText":"מהי מידת הקושי שלך לביצוע פעולת הליכה בין חדרים?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 4,
+        "QuestionText":"מהי מידת הקושי שלך בעת נעילת נעליים או גריבת גרביים?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 5,
+        "QuestionText":"מהי מידת הקושי שלך לבצע כריעה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 6,
+        "QuestionText":"מהי מידת הקושי שלך בעת הרמת חפץ כמו תיק או שקית קניות מהרצפה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 7,
+        "QuestionText":"מהי מידת הקושי שלך בביצוע פעילויות קלות במסגרת ביתך?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 8,
+        "QuestionText":"מהי מידת הקושי שלך בביצוע פעילויות קשות במסגרת ביתך?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 9,
+        "QuestionText":"מהי מידת הקושי שלך בעת כניסה או יציאה מהמכונית?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 10,
+        "QuestionText":"מהי מידת הקושי שלך בעת הליכה למרחק 2 רחובות?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 11,
+        "QuestionText":"מהי מידת הקושי שלך בעת הליכה למרחק 1.6 ק''מ?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 12,
+        "QuestionText":"מהי מידת הקושי שלך בעת עליה או ירידה של 10 מדרגות (כמהלך מדרגות אחד)?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 13,
+        "QuestionText":"מהי מידת הקושי שלך בעת עמידה למשך שעה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 14,
+        "QuestionText":"מהי מידת הקושי שלםך בעת ישיבה למשך שעה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 15,
+        "QuestionText":"מהי מידת הקושי שלך בעת ריצה על משטח מישורי?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 16,
+        "QuestionText":"מהי מידת הקושי שלך בעת ריצה על משטח לא מישורי?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 17,
+        "QuestionText":"מהי מידת הקושי שלך בעת ביצוע פניות חדות בעת ריצה מהירה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 18,
+        "QuestionText":"מהי מידת הקושי שלך בעת דילוג?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 19,
+        "QuestionText":"מהי מידת הקושי שלך בעת הסתובבות במיטה?",
+        "Type":"VAS",
+        "Best":"ללא קושי",
+        "Worst":"קושי חמור או לא מסוגל/ת לבצע",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "0"
+          },
+          {
+            "answerID": 1,
+            "answerText": "1"
+          },
+          {
+            "answerID": 2,
+            "answerText": "2"
+          },
+          {
+            "answerID": 3,
+            "answerText": "3"
+          },
+          {
+            "answerID": 4,
+            "answerText": "4"
+          }
+        ]
+      }
+    ]
+  }
+]

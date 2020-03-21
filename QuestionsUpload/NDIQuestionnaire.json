@@ -1,0 +1,329 @@
+[
+  {
+    "QuestionnaireID" : 2,
+    "QuestionnaireText" : "Neck Disability Index",
+    "Questions" :
+      [
+          {
+            "QuestionID" : 0,
+            "QuestionText":"עוצמת כאב",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אין לי כאבים כרגע"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "הכאב חלש מאד כרגע"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "הכאב בעוצמה בינונית כרגע"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "הכאב די חמור כרגע"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "הכאב חמוד מאד כרגע"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "הכאב בלתי נסבל כרגע"
+                }
+              ]
+          },
+			{
+            "QuestionID" : 1,
+            "QuestionText":"טיפוח אישי (רחצה, לבוש)",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אני מסוגל/ת לדאוג לעצמי כרגע כרגיל מבלי להחמיר את הכאבים"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "אני מסוגל/ת לדאוג לעצמי כרגיל אך הדבר גורם להחמרה בכאביי"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "הדאגה לעצמי מכאיבה, ואני איטי/ת וזהיר/ה"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "אני זקוק/ה לעזרה מסוימת אך יכול/ה להסתדר במרבית פעולות הטיפול העצמי"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "אני זקוק/ה לעזרה יום יומית ברוב פעולות הטיפול העצמי"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אני לא מתלבש/ת, אני מתרחץ/ת עם קושי ואני נשאר/ת במיטה"
+                }
+              ]
+          },
+		  {
+            "QuestionID" : 2,
+            "QuestionText":"הרמה",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אני מסוגל/ת להרים משאות כבדים מבלי להחמיר את הכאב"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "אני מסוגל/ת להרים משאות כבדים אך זה מחמיר את הכאב"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "הכאב מונע ממני הרמת משאות כבדים מהרצפה אך אני יכול/ה להסתדר אם הם מונחים בצורה נוחה (על שולחן למשל)"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "הכאב מונע ממני הרמת משאות כבדים אך אני יכול/ה להסתדר עם משאות קלים ובינוניים אם הם מונחים בצורה נוחה"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "אני מסוגל/ת להרים רק משאות קלים מאוד"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אני לא מסוגל/ת להרים או לסחוב דבר"
+                }
+              ]
+          },
+		  		  {
+            "QuestionID" : 3,
+            "QuestionText":"קריאה",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אני יכול לקרוא כמה שארצה ללא כאב בצווארי"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "אני יכול לקרוא כמה שארצה עם כאב קל בצווארי"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "אני יכול לקרוא כמה שארצה עם כאב בינוני בצווארי"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "אני לא מסוגל לקרוא כמה שארצה בשל כאב בינוני בצווארי"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "אני בקושי מסוגל לקרוא בשל כאב חמור בצווארי"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אני לא יכול לקרוא בכלל"
+                }
+              ]
+          },
+		  		  		  {
+            "QuestionID" : 4,
+            "QuestionText":"כאב ראש",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אין לי כאבי ראש בכלל"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "יש לי כאבי ראש קלים לעיתים רחוקות"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "יש לי כאבי ראש בינוניים לעיתים רחוקות"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "יש לי כאבי ראש בינוניים לעיתים קרובות"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "יש לי כאבי ראש חמורים לעיתים קרובות"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "יש לי כאבי ראש כמעט כל הזמן"
+                }
+              ]
+          },
+			{
+            "QuestionID" : 5,
+            "QuestionText":"ריכוז",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "כשאני רוצה אני מסוגל להתרכז באופן מלא ללא קושי"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "כשאני רוצה אני מסוגל להתרכז באופן מלא עם מעט קושי"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "יש לי מידה סבירה של קושי להתרכז כשאני רוצה"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "יש לי קושי רב להתרכז כשאני רוצה"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "יש לי קושי עצום להתרכז כשאני רוצה"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אינני מסוגל להתרכז כלל"
+                }
+              ]
+          },
+		  {
+            "QuestionID" : 6,
+            "QuestionText":"עבודה",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אני יכול לעבוד ככל שאני רוצה"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "אני יכול לבצע רק את עבודתי השגרתית אך לא מעבר לכך"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "אני יכול לבצע את רוב עבודתי השגרתית אך לא מעבר לכך"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "אני לא מסוגל לבצע את עבודתי השגרתית"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "אני בקושי מסוגל לעבוד"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אינני יכול לעבוד כלל"
+                }
+              ]
+          },
+		  		  {
+            "QuestionID" : 7,
+            "QuestionText":"נהיגה",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אני יכול לנהוג ברכבי ללא כאב בצווארי"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "אני יכול לנהוג ברכבי כמה שארצה עם כאב קל בצווארי"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "אני יכול לנהוג ברכבי כמה שארצה עם כאב בינוני בצווארי"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "אינני יכול לנהוג ברכבי כמה שארצה בשל כאב בינוני בצווארי"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "אני בקושי יכול לנהוג בשל כאב חמור בצווארי"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אינני יכול לנהוג כלל"
+                }
+              ]
+          },
+		  		  		  {
+            "QuestionID" : 8,
+            "QuestionText":"שינה",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אין לי בעיות שינה"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "שנתי מופרעת במעט (פחות משעה ללא שינה)"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "שנתי מופרעת באופן מתון (1-2 שעות ללא שינה)"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "שנתי מופרעת באופן בינוני (2-3 שעות ללא שינה)"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "שנתי מופרעת באופן חמור (3-5 שעות ללא שינה)"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "שנתי מופרעת לחלוטין (5-7 שעות ללא שינה)"
+                }
+              ]
+          },
+		  		  		  		  {
+            "QuestionID" : 9,
+            "QuestionText":"שעות הפנאי",
+            "Type":"Single",
+            "Answers":
+              [
+                {
+                  "answerID": 0,
+                  "answerText": "אני מסוגל לעסוק בכל פעולות הפנאי שלי, ללא כאבים בצווארי כלל"
+                },
+                {
+                  "answerID": 1,
+                  "answerText": "אני מסוגל לעסוק בכל פעולות הפנאי שלי, עם מעט כאבים בצווארי"
+                },
+                {
+                  "answerID": 2,
+                  "answerText": "אני מסוגל לעסוק ברוב אך לא בכל פעולות הפנאי הרגילות שלי, בשל כאבים בצווארי"
+                },
+                {
+                  "answerID": 3,
+                  "answerText": "אני מסוגל לעסוק במעט מפעולות הפנאי הרגילות שלי, בשל כאבים בצווארי"
+                },
+                {
+                  "answerID": 4,
+                  "answerText": "אני בקושי מסוגל לעסוק פעולות פנאי, בשל כאבים בצווארי"
+                },
+                {
+                  "answerID": 5,
+                  "answerText": "אינני מסוגל לעסוק בפעולות פנאי בכלל"
+                }
+              ]
+          }
+      ]
+  }
+]

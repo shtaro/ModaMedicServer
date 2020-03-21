@@ -4,6 +4,11 @@ var common = require('./common');
 var StepsMetric = require('../modules/Metrics').StepsMetric;
 var DistanceMetric = require('../modules/Metrics').DistanceMetric;
 var CaloriesMetric = require('../modules/Metrics').CaloriesMetric;
+var SleepMetric = require('../modules/Metrics').SleepMetric;
+var AccelerometerMetric = require('../modules/Metrics').AccelerometerMetric;
+var WeatherMetric = require('../modules/Metrics').WeatherMetric;
+var ActivityMetric = require('../modules/Metrics').ActivityMetric;
+
 
 
 router.post('/steps', function (req, res, next) {
@@ -11,6 +16,7 @@ router.post('/steps', function (req, res, next) {
         /*TODO: change UserID to token*/
         UserID: "111111111",
         Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
     newMetric.save(function (error) {
@@ -23,6 +29,7 @@ router.post('/distance', function (req, res, next) {
         /*TODO: change UserID to token*/
         UserID: "111111111",
         Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
     newMetric.save(function (error) {
@@ -35,6 +42,59 @@ router.post('/calories', function (req, res, next) {
         /*TODO: change UserID to token*/
         UserID: "111111111",
         Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
+        Data: req.body.Data
+    });
+    newMetric.save(function (error) {
+        common(res, error, error, newMetric);
+    });
+});
+
+router.post('/sleep', function (req, res, next) {
+    let newMetric = new SleepMetric({
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
+        Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
+        Data: req.body.Data
+    });
+    newMetric.save(function (error) {
+        common(res, error, error, newMetric);
+    });
+});
+
+router.post('/accelerometer', function (req, res, next) {
+    let newMetric = new AccelerometerMetric({
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
+        Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
+        Data: req.body.Data
+    });
+    newMetric.save(function (error) {
+        common(res, error, error, newMetric);
+    });
+});
+
+router.post('/weather', function (req, res, next) {
+    let newMetric = new WeatherMetric({
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
+        Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
+        Data: req.body.Data
+    });
+    newMetric.save(function (error) {
+        common(res, error, error, newMetric);
+    });
+});
+
+router.post('/activity', function (req, res, next) {
+    let newMetric = new ActivityMetric({
+        /*TODO: change UserID to token*/
+        UserID: "111111111",
+        Timestamp: (new Date).getTime(),
+        ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
     newMetric.save(function (error) {
@@ -48,10 +108,8 @@ router.get('/getSteps', function (req, res, next) {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
-    /*TODO: change UserID to token*/
-    let userid = "111111111";
     StepsMetric.find({
-            UserID: userid,
+            UserID: req.query.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -65,10 +123,8 @@ router.get('/getDistance', function (req, res, next) {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
-    /*TODO: change UserID to token*/
-    let user = "111111111";
     DistanceMetric.find({
-            UserID: user,
+            UserID: req.query.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -82,10 +138,8 @@ router.get('/getCalories', function (req, res, next) {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
-    /*TODO: change UserID to token*/
-    let user = "111111111";
     CaloriesMetric.find({
-            UserID: user,
+            UserID: req.query.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
