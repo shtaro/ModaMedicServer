@@ -19,7 +19,7 @@ var SleepSchema = new Schema({
     Data: [{
         StartTime: Number,
         EndTime: Number,
-        Type: String
+        State: String
     }]
 });
 
@@ -53,7 +53,7 @@ var ActivitySchema = new Schema({
     Data: [{
         StartTime: Number,
         EndTime: Number,
-        Type: String
+        State: String
     }]
 });
 

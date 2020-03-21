@@ -50,8 +50,4 @@ router.post('/register', function (req, res, next) {
 });
 
 
-router.post('/about', function (req, res) {
-  res.send('About this wiki');
-});
-
 module.exports = router;
