@@ -153,7 +153,7 @@ router.get('/getSleep', function (req, res, next) {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
-    SleepMetricMetric.find({
+    SleepMetric.find({
             UserID: req.query.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
