@@ -20,6 +20,7 @@ var UserSchema = new Schema({
     BirthDate: Date,
     Email: String,
     Type: String,
+    DateOfSurgery: Date,
     Questionnaires: [
         {
         QuestionnaireID: Number,

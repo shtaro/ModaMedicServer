@@ -18,6 +18,13 @@ router.get('/getUserQuestionnaire/:userID', function(req, res, next) {
   });
 });
 
+router.get('/getDateOfSurgery/:userID', function(req, res, next) {
+  let userid = req.params.userID;
+  User.getUserByUserID(userid, function (err, user) {
+    common(res, err, err, user.DateOfSurgery);
+  });
+});
+
 router.get('/list', (req,res) => {
   User.find((err, docs) => {
     if(!err){
@@ -38,9 +45,10 @@ router.post('/register', function (req, res, next) {
     Password: req.body.Password,
     First_Name: req.body.First_Name,
     Last_Name: req.body.Last_Name,
-    BirthDate: new Date(req.body.BirthDate, ),
+    BirthDate: new Date(req.body.BirthDate),
     Email: req.body.Email,
     Type: req.body.Type,
+    DateOfSurgery: new Date(req.body.DateOfSurgery),
     Questionnaires: req.body.Questionnaires
   });
 
