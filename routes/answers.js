@@ -17,14 +17,20 @@ var getScore = function (QuestionnaireID, Answers) {
     switch(QuestionnaireID){
         case "1":
             Answers.forEach(function(answer){
-                if(answer.AnswerID.length==1) {
-                    score = score + answer.AnswerID[0];
-                }
-                else{
-                    /*TODO */
-                }
+                score = score + answer.AnswerID;
             });
             score = score*2;
+            break;
+        case "2":
+            Answers.forEach(function(answer){
+                score = score + answer.AnswerID;
+            });
+            break;
+        case "3":
+            Answers.forEach(function(answer){
+                score = score + answer.AnswerID;
+            });
+            break;
     }
     return score;
 };
