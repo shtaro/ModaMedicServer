@@ -38,24 +38,5 @@ router.get('/list', (req,res) => {
   });
 });
 
-router.post('/register', function (req, res, next) {
-
-  let newUser = new User({
-    UserID: req.body.UserID,
-    Password: req.body.Password,
-    First_Name: req.body.First_Name,
-    Last_Name: req.body.Last_Name,
-    BirthDate: new Date(req.body.BirthDate),
-    Email: req.body.Email,
-    Type: req.body.Type,
-    DateOfSurgery: new Date(req.body.DateOfSurgery),
-    Questionnaires: req.body.Questionnaires
-  });
-
-  User.createUser(newUser, function (error, user) {
-      common(res, error, error, newUser);
-  });
-});
-
 
 module.exports = router;

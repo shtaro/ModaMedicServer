@@ -1,8 +1,7 @@
-
-
 var express = require('express');
 var router = express.Router();
 var mongoose = require('mongoose');
+var service = require('../service.js');
 
 var Questionnaires = require('../modules/Questionnaire');
 //Define a schema
@@ -47,17 +46,11 @@ module.exports.createUser = function(newUser, callback){
 };
 
 //gets user from db by username
-module.exports.getUserByUserID = function(username, callback){
-    var query = {UserID: username};
+module.exports.getUserByUserID = function(userid, callback){
+    var query = {UserID: userid};
     User.findOne(query, callback);
 };
 
-
-
-//gets user from db by id
-module.exports.getUserById = function(id, callback){
-    User.findById(id, callback);
-};
 /**
 //returns if entered password matches saved password (using hash)
 module.exports.comparePassword = function(candidatePassword, hash, callback){
@@ -67,7 +60,7 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
         isMatch=true;
     callback(null, isMatch);
 };
-
+**/
 //changes password saved in db
 module.exports.changePassword = function(user, newPassword, callback){
     user.Password = service.hashElement(newPassword);
@@ -78,6 +71,6 @@ module.exports.changePassword = function(user, newPassword, callback){
 // module.exports.getAllUsersIds = function(){
 //     User.
 // };
-**/
+
 
 
