@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var User = require('./modules/User');
 const bodyparser = require('body-parser');
 
 
@@ -10,14 +11,20 @@ var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var questionnairesRouter = require('./routes/questionnaires');
-var metricsRouter = require('./routes/metrics');
-var answersRouter = require('./routes/answers');
+var metricsDoctorRouter = require('./routes/metrics/metricsDoctor');
+var metricsPatientRouter = require('./routes/metrics/metricsPatient');
+var metricsAdminRouter = require('./routes/metrics/metricsAdmin');
+var answersPatientRouter = require('./routes/answers/answersPatient');
+var answersDoctorRouter = require('./routes/answers/answersDoctor');
+var answersAdminRouter = require('./routes/answers/answersAdmin');
 
 var app = express();
 var cors = require('cors');
 
 
 app.use(cors());
+
+app.use('/auth', authRouter);
 
 app.use("/",indexRouter,  function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -62,9 +69,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('http://icc.ise.bgu.ac.il/njsw03:8103/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/questionnaires', questionnairesRouter);
-app.use('/metrics', metricsRouter);
-app.use('/answers', answersRouter);
-app.use('/auth', authRouter);
+app.use('/auth/patients/metrics', metricsPatientRouter);
+app.use('/auth/doctors/metrics', metricsDoctorRouter);
+app.use('/auth/admins/metrics', metricsAdminRouter);
+app.use('/auth/patients/answers', answersPatientRouter);
+app.use('/auth/doctors/answers', answersDoctorRouter);
+app.use('/auth/admins/answers', answersAdminRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -3,56 +3,111 @@ var router = express.Router();
 var common = require('./common');
 var User = require('../modules/User');
 var jwt = require("jsonwebtoken");
+var service = require('../service.js');
 
 
-var secret="secret";
-
-router.post('/register', function (req, res, next) {
-    User.getUserByUserID(req.body.UserID, function (err,user) {
-        if(!user){
-            let newUser = new User({
-                UserID: req.body.UserID,
-                Password: req.body.Password,
-                First_Name: req.body.First_Name,
-                Last_Name: req.body.Last_Name,
-                BirthDate: new Date(req.body.BirthDate),
-                Email: req.body.Email,
-                Type: req.body.Type,
-                DateOfSurgery: new Date(req.body.DateOfSurgery),
-                Questionnaires: req.body.Questionnaires
-            });
-            User.createUser(newUser, function (error, user) {
-                common(res, error, error, newUser);
-            });
-        }
-        else {
-            var error = { 'message': 'User already exists' };
-            return common(res, error, error, null);
-        }
-    });
+router.use('/', function (req, res, next){
+    User.privateCheck(req, res, next);
 });
 
-router.post('/login', function(req, res, next) {
-    User.getUserByUserID(req.body.UserID, function (err,user) {
-        if(user){
-            if(user.Password === req.body.Password){
-                payload = {
-                    UserID: user.UserID, First_Name: user.First_Name, Last_Name: user.Last_Name,
-                    BirthDate: user.BirthDate, Email: user.Email, Type: user.Type,
-                    DateOfSurgery: user.DateOfSurgery, Questionnaires: user.Questionnaires
+router.use('/patients', function (req, res, next) {
+    User.patientCheck(req, res, next);
+});
+
+router.use('/doctors', function (req, res, next) {
+    User.doctorCheck(req, res, next);
+});
+
+router.use('/admins', function (req, res, next) {
+    User.adminCheck(req, res, next);
+});
+
+
+router.get('/logout', function (req, res) {
+    req.logout();
+    if (!req.user)
+        common(res, null, "logged out", null);
+    else {
+        error = { 'message': "could not log out" };
+        common(res, error, "", null);
+    }
+});
+
+router.post('/change_password', function (req, res) {
+    if (req.user) {
+        User.getUserByUserID(req.user.UserID, function (err, user) {
+            if (err) throw err;
+            User.comparePassword(req.body.Old_Password, user.Password, function (err, isMatch) {
+                if (err) throw err;
+                if (isMatch) {
+                    User.changePassword(user, req.body.New_Password, function (err) {
+                        if (err) {
+                            error = { 'message': 'Error has occured. Please try again.' }
+                            common(res, error, 'Error has occured. Please try again.', null);
+                        }
+                        else {
+                            common(res, false, null, null);
+                        }
+                    })
+                }
+                else {
+                    error = { 'message': 'Wrong Password.' }
+                    common(res, error, 'Wrong Password.', null);
+                }
+            });
+        });
+    }
+
+});
+
+router.get('/isLoggedIn', function (req, res) {
+    if (req.user)
+        common(res, null, "", true);
+    else
+        common(res, null, "", false);
+
+});
+
+router.get('/loggedInUser', function (req, res) {
+    if (req.user)
+        common(res, null, "", req.user);
+
+    else
+        common(res, null, "", null);
+});
+
+/**
+router.post('/forgotPassword', function (req, res) {
+    User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
+        var New_Password = RandomString();
+        User.changePassword(user, New_Password, function (err) {
+            if (!err) {
+                var transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: 'medicalmystery3@gmail.com',
+                        pass: 'Medic@lMystery'
+                    }
+                });
+
+                var mailOptions = {
+                    from: 'medicalmystery3@gmail.com',
+                    to: req.body.UserID,
+                    subject: 'Password Reset for MedicalMystery',
+                    text: 'Your new password is: ' + New_Password + '\n You can change it after you log in.'
                 };
-                options = {expiresIn: "2h"};
-                var token = jwt.sign(payload, secret, options);
-                return common(res,error,error,token);
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        common(res, err, err, null);
+                    } else {
+                        common(res, err, err, null);
+                    }
+                });
             }
-            else {
-                var error = { 'message': 'Password incorrect' };
-                return common(res, error, error, null);
-            }
-        }
-        else {
-            var error = { 'message': 'User not exists' };
-            return common(res, error, error, null);
-        }
+        });
     });
 });
+**/
+
+
+module.exports=router;
