@@ -71,9 +71,7 @@ router.post('/login', function(req, res, next) {
     if(user){
       if(user.Password === req.body.Password){
         var payload = {
-          UserID: user.UserID, First_Name: user.First_Name, Last_Name: user.Last_Name,
-          BirthDate: user.BirthDate, Email: user.Email, Type: user.Type,
-          DateOfSurgery: user.DateOfSurgery, Questionnaires: user.Questionnaires
+          UserID: user.UserID, Email: user.Email, Type: user.Type
         };
         options = {expiresIn: "30d"};
         var token = jwt.sign(payload, secret, options);
