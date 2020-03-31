@@ -75,7 +75,8 @@ router.post('/login', function(req, res, next) {
         };
         options = {expiresIn: "30d"};
         var token = jwt.sign(payload, secret, options);
-        return common(res,error,error,token);
+        var userName = user.First_Name + " " + user.Last_Name;
+        return common(res,error,error,{"token":token,"name":userName,"type":user.Type});
       }
       else {
         var error = { 'message': 'Password incorrect' };
