@@ -13,8 +13,7 @@ var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 
 router.post('/steps', function (req, res, next) {
     let newMetric = new StepsMetric({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
+        UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -26,8 +25,7 @@ router.post('/steps', function (req, res, next) {
 
 router.post('/distance', function (req, res, next) {
     let newMetric = new DistanceMetric({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
+        UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -39,7 +37,6 @@ router.post('/distance', function (req, res, next) {
 
 router.post('/calories', function (req, res, next) {
     let newMetric = new CaloriesMetric({
-        /*TODO: change UserID to token*/
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
@@ -52,8 +49,7 @@ router.post('/calories', function (req, res, next) {
 
 router.post('/sleep', function (req, res, next) {
     let newMetric = new SleepMetric({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
+        UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -65,8 +61,7 @@ router.post('/sleep', function (req, res, next) {
 
 router.post('/accelerometer', function (req, res, next) {
     let newMetric = new AccelerometerMetric({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
+        UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -78,8 +73,7 @@ router.post('/accelerometer', function (req, res, next) {
 
 router.post('/weather', function (req, res, next) {
     let newMetric = new WeatherMetric({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
+        UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -91,8 +85,7 @@ router.post('/weather', function (req, res, next) {
 
 router.post('/activity', function (req, res, next) {
     let newMetric = new ActivityMetric({
-        /*TODO: change UserID to token*/
-        UserID: "111111111",
+        UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data

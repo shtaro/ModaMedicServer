@@ -38,8 +38,7 @@ var getScore = function (QuestionnaireID, Answers) {
 };
 
 router.get('/getLastDaily', function(req, res, next){
-    /*TODO: change userid to token*/
-    let userid = "111111111";
+    let userid = req.UserID;
     DailyAnswer.findOne({UserID:  userid}).sort({ ValidDate: -1 }).exec(function (err, docs) {
             common(res, err, err, docs.ValidDate);
     });
@@ -50,8 +49,7 @@ router.get('/getLastDaily', function(req, res, next){
 router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
     if(req.params.QuestionnaireID===0) {
         var newAnswer = new DailyAnswer({
-            /*TODO: change UserID to token*/
-            UserID: "111111111",
+            UserID: req.UserID,
             Timestamp: (new Date).getTime(),
             ValidDate: req.body.ValidDate,
             QuestionnaireID: req.params.QuestionnaireID,
@@ -60,8 +58,7 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
     }
     else{
         var newAnswer = new PeriodicAnswer({
-            /*TODO: change UserID to token*/
-            UserID: "111111111",
+            UserID: req.UserID,
             Timestamp: (new Date).getTime(),
             ValidDate: req.body.ValidDate,
             QuestionnaireID: req.params.QuestionnaireID,
