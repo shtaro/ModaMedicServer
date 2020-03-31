@@ -75,7 +75,7 @@ router.post('/login', function(req, res, next) {
           BirthDate: user.BirthDate, Email: user.Email, Type: user.Type,
           DateOfSurgery: user.DateOfSurgery, Questionnaires: user.Questionnaires
         };
-        options = {expiresIn: "2h"};
+        options = {expiresIn: "30d"};
         var token = jwt.sign(payload, secret, options);
         return common(res,error,error,token);
       }
