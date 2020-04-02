@@ -3,13 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-var User = require('./modules/User');
 const bodyparser = require('body-parser');
 
 
 var indexRouter = require('./routes/index');
 var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
+var usersAllRouter = require('./routes/usersAll');
 var questionnairesRouter = require('./routes/questionnaires');
 var metricsDoctorRouter = require('./routes/metrics/metricsDoctor');
 var metricsPatientRouter = require('./routes/metrics/metricsPatient');
@@ -24,7 +24,6 @@ var cors = require('cors');
 
 app.use(cors());
 
-app.use('/auth', authRouter);
 
 app.use("/",indexRouter,  function (req, res, next) {
   res.setHeader('Access-Control-Allow-Origin', '*');
@@ -33,6 +32,8 @@ app.use("/",indexRouter,  function (req, res, next) {
 
   next();
 });
+
+app.use('/auth', authRouter);
 
 app.use(bodyparser.urlencoded({
   extended: true
@@ -66,8 +67,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//app.use('http://icc.ise.bgu.ac.il/njsw03:8103/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/auth/usersAll', usersAllRouter);
 app.use('/questionnaires', questionnairesRouter);
 app.use('/auth/patients/metrics', metricsPatientRouter);
 app.use('/auth/doctors/metrics', metricsDoctorRouter);

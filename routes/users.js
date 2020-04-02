@@ -6,40 +6,6 @@ var jwt = require('jsonwebtoken');
 
 var secret="secret";
 
-router.post('/getUser', function(req, res, next) {
-  let userid = req.body.UserID;
-  User.getUserByUserID(userid, function (err, user) {
-    common(res, err, err, user);
-  });
-});
-
-router.get('/getUserQuestionnaire/:userID', function(req, res, next) {
-  let userid = req.params.userID;
-  User.getUserByUserID(userid, function (err, user) {
-    common(res, err, err, user.Questionnaires);
-  });
-});
-
-router.get('/getDateOfSurgery/:userID', function(req, res, next) {
-  let userid = req.params.userID;
-  User.getUserByUserID(userid, function (err, user) {
-    common(res, err, err, user.DateOfSurgery);
-  });
-});
-
-router.get('/list', (req,res) => {
-  User.find((err, docs) => {
-    if(!err){
-      res.send({
-        list: docs
-      });
-    }
-    else {
-      console.log('Failed to retrieve the Course List: '+ err);
-    }
-  });
-});
-
 
 router.post('/register', function (req, res, next) {
   User.getUserByUserID(req.body.UserID, function (err,user) {
@@ -89,5 +55,6 @@ router.post('/login', function(req, res, next) {
     }
   });
 });
+
 
 module.exports = router;

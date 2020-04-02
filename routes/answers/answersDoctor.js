@@ -12,13 +12,13 @@ var getDate = function (timestamp) {
 };
 
 
-router.get('/getDailyAnswers/:userID', function (req, res, next) {
+router.get('/getDailyAnswers', function (req, res, next) {
     if (typeof (req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
     DailyAnswer.find({
-            UserID: req.params.userID,
+            UserID: req.body.UserID,
             QuestionnaireID: 0,
             ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
@@ -27,14 +27,14 @@ router.get('/getDailyAnswers/:userID', function (req, res, next) {
         }));
 });
 
-router.get('/getPeriodicAnswers/:UserID/:QuestionnaireID', function (req, res, next) {
+router.get('/getPeriodicAnswers/:QuestionnaireID', function (req, res, next) {
     if (typeof (req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
         req.query.end_time = (new Date).getTime();
     }
     var ansArr=[];
     PeriodicAnswer.find({
-            UserID: req.params.UserID,
+            UserID: req.body.UserID,
             QuestionnaireID: req.params.QuestionnaireID,
             ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
         }

@@ -15,7 +15,7 @@ var UserSchema = new Schema({
     Last_Name: String,
     BirthDate: Number,
     Email: String,
-    Type: String,
+    Type: [String],
     DateOfSurgery: Number,
     Questionnaires: [
         {
@@ -67,7 +67,7 @@ module.exports.patientCheck = function(req, res, next){
     try {
         const decoded = jwt.verify(token, secret);
         var userType = decoded.Type;
-        if(userType==="patient") {
+        if(userType.includes("patient")) {
             req.Type = userType;
             next(); //move on to the actual function
         }
@@ -85,7 +85,7 @@ module.exports.doctorCheck = function(req, res, next){
     try {
         const decoded = jwt.verify(token, secret);
         var userType = decoded.Type;
-        if(userType==="doctor") {
+        if(userType.includes("doctor")) {
             req.Type = userType;
             next(); //move on to the actual function
         }
@@ -103,7 +103,7 @@ module.exports.adminCheck = function(req, res, next){
     try {
         const decoded = jwt.verify(token, secret);
         var userType = decoded.Type;
-        if(userType==="admin") {
+        if(userType.includes("admin")) {
             req.Type = userType;
             next(); //move on to the actual function
         }

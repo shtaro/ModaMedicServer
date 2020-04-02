@@ -17,7 +17,7 @@ router.get('/getSteps', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     StepsMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -32,7 +32,7 @@ router.get('/getDistance', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     DistanceMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -47,7 +47,7 @@ router.get('/getCalories', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     CaloriesMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -62,7 +62,7 @@ router.get('/getSleep', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     SleepMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -77,7 +77,7 @@ router.get('/getAccelerometer', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     AccelerometerMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -92,7 +92,7 @@ router.get('/getWeather', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     WeatherMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
@@ -107,7 +107,7 @@ router.get('/getActivity', function (req, res, next) {
         req.query.end_time = (new Date).getTime();
     }
     ActivityMetric.find({
-            UserID: req.query.UserID,
+            UserID: req.body.UserID,
             Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {

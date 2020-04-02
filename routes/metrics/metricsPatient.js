@@ -13,7 +13,7 @@ var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 
 router.post('/steps', function (req, res, next) {
     let newMetric = new StepsMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -25,7 +25,7 @@ router.post('/steps', function (req, res, next) {
 
 router.post('/distance', function (req, res, next) {
     let newMetric = new DistanceMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -37,7 +37,7 @@ router.post('/distance', function (req, res, next) {
 
 router.post('/calories', function (req, res, next) {
     let newMetric = new CaloriesMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -49,7 +49,7 @@ router.post('/calories', function (req, res, next) {
 
 router.post('/sleep', function (req, res, next) {
     let newMetric = new SleepMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -61,7 +61,7 @@ router.post('/sleep', function (req, res, next) {
 
 router.post('/accelerometer', function (req, res, next) {
     let newMetric = new AccelerometerMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -73,7 +73,7 @@ router.post('/accelerometer', function (req, res, next) {
 
 router.post('/weather', function (req, res, next) {
     let newMetric = new WeatherMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -85,7 +85,7 @@ router.post('/weather', function (req, res, next) {
 
 router.post('/activity', function (req, res, next) {
     let newMetric = new ActivityMetric({
-        UserID: req.UserID,
+        UserID: req.body.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
@@ -99,7 +99,7 @@ router.post('/activity', function (req, res, next) {
 
 
 router.get('/getMissingDates', function (req, res, next){
-    var userID = req.query.UserID;
+    var userID = req.body.UserID;
     var days = req.query.days;
     var metricName = req.query.metricName;
     var now = (new Date).getTime();
