@@ -50,8 +50,9 @@ mongoose.Promise = global.Promise;
 //Get the default connection
 var db = mongoose.connection;
 db.once('open', function (err) {
-  if (!err)
+  if (!err) {
     console.log("connected to mongo db");
+  }
   else
     console.log("failed");
 });

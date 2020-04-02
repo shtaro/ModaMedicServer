@@ -12,7 +12,7 @@ router.post('/getUser', function(req, res, next) {
 });
 
 router.get('/getUserQuestionnaire', function(req, res, next) {
-  let userid = req.body.UserID;
+  let userid = req.UserID;
   User.getUserByUserID(userid, function (err, user) {
     common(res, err, err, user.Questionnaires);
   });

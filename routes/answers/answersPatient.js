@@ -5,12 +5,6 @@ var DailyAnswer = require('../../modules/Answer').DailyAnswer;
 var PeriodicAnswer = require('../../modules/Answer').PeriodicAnswer;
 
 
-var getDate = function (timestamp) {
-    date = new Date(timestamp).toISOString();
-    date_string = date.slice(0, 10) + ' ' + date.slice(-13, -8)
-    return date_string;
-};
-
 var getScore = function (QuestionnaireID, Answers) {
     var score=0;
     switch(QuestionnaireID){
@@ -68,6 +62,23 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
     }
     newAnswer.save(function (error) {
         common(res, error, error, newAnswer);
+    });
+});
+
+
+router.get('/answeredQuestionnaire', function (req, res) {
+    var userID = req.UserID;
+    var days = req.query.days;
+    var questionnaireID = req.query.questionnaireID;
+    var now = new Date();
+    var realNow = now.getTime();
+    var start = now.setHours(-(24*days),0,0,0);
+    PeriodicAnswer.find({
+        UserID:  userID,
+        QuestionnaireID: questionnaireID,
+        ValidDate: { $gte: start, $lte: realNow }
+    }, function (err, docs) {
+        common(res, err, err, docs.length>0);
     });
 });
 
