@@ -10,6 +10,38 @@ var WeatherMetric = require('../../modules/Metrics').WeatherMetric;
 var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 
 
+var findMostRecent = function(docs, start, end){
+    var ans = [];
+    var realStart;
+    if(start!==0)
+        realStart = (new Date(start)).setHours(-(24),0,0,0);
+    else{
+        var oldest= docs[0];
+        docs.forEach(function(doc){
+            if(doc.ValidTime<oldest.ValidTime)
+                oldest=doc;
+        });
+        realStart = (new Date(oldest.ValidTime)).setHours(0,0,0,0);
+    }
+    var realEnd = (new Date(end)).setHours(24, 0, 0, 0);
+    for(var temp = realStart; temp <= realEnd; temp += (24 * 3600 * 1000)){
+        var docsPerDay = [];
+        docs.forEach(function(doc){
+            if(doc.ValidTime>= temp && doc.ValidTime< (temp + (24 * 3600 * 1000)))
+                docsPerDay.push(doc);
+        });
+        if(docsPerDay.length>0) {
+            var recent = docsPerDay[0];
+            docsPerDay.forEach(function (doc2) {
+                if (doc2.ValidTime > recent.ValidTime)
+                    recent = doc2;
+            });
+            ans.push(recent);
+        }
+    }
+    return ans;
+};
+
 router.post('/getSteps', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
@@ -21,7 +53,8 @@ router.post('/getSteps', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
@@ -36,7 +69,8 @@ router.post('/getDistance', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
@@ -51,7 +85,8 @@ router.post('/getCalories', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
@@ -66,7 +101,8 @@ router.post('/getSleep', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
@@ -81,7 +117,8 @@ router.post('/getAccelerometer', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
@@ -96,7 +133,8 @@ router.post('/getWeather', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
@@ -111,7 +149,8 @@ router.post('/getActivity', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            common(res, err, err, docs);
+            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+            common(res, err, err, ans);
         }));
 });
 
