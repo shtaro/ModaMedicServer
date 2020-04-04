@@ -53,8 +53,12 @@ router.post('/getSteps', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
@@ -69,8 +73,12 @@ router.post('/getDistance', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
@@ -85,8 +93,12 @@ router.post('/getCalories', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
@@ -101,8 +113,12 @@ router.post('/getSleep', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
@@ -117,8 +133,12 @@ router.post('/getAccelerometer', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
@@ -133,8 +153,12 @@ router.post('/getWeather', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
@@ -149,8 +173,12 @@ router.post('/getActivity', function (req, res, next) {
             ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
-            var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-            common(res, err, err, ans);
+            if(docs.length>0) {
+                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                common(res, err, err, ans);
+            }
+            else
+                common(res, err, err, docs);
         }));
 });
 
