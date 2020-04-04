@@ -140,43 +140,43 @@ var getRecordsBetweenDates = function(userID, start, realNow, metric){
         case "Steps":
             docs = StepsMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
         case "Calories":
             docs = CaloriesMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
         case "Distance":
             docs = DistanceMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
         case "Sleep":
             docs = SleepMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
         case "Accelerometer":
             docs = AccelerometerMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
         case "Weather":
             docs = WeatherMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
         case "Activity":
             docs = ActivityMetric.find({
                 UserID: userID,
-                ValidDate: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lte: realNow }
             }).exec();
             break;
     }
@@ -190,7 +190,7 @@ var findDates = function(start, realNow, docs){
         var hasfound = false;
         var i;
         for(i=0; i<docs.length; i++) {
-            if (docs[i]._doc.ValidDate < temp + (24 * 3600 * 1000) && docs[i]._doc.ValidDate >= temp) {
+            if (docs[i]._doc.ValidTime < temp + (24 * 3600 * 1000) && docs[i]._doc.ValidTime >= temp) {
                 hasfound = true;
                 break;
             }

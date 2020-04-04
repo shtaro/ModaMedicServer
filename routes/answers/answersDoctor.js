@@ -20,7 +20,7 @@ router.get('/getDailyAnswers', function (req, res, next) {
     DailyAnswer.find({
             UserID: req.body.UserID,
             QuestionnaireID: 0,
-            ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
+            ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -36,13 +36,13 @@ router.get('/getPeriodicAnswers/:QuestionnaireID', function (req, res, next) {
     PeriodicAnswer.find({
             UserID: req.body.UserID,
             QuestionnaireID: req.params.QuestionnaireID,
-            ValidDate: {$gte: req.query.start_time, $lte: req.query.end_time}
+            ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
         }
         , (function (err, docs) {
             docs.forEach(function(answer){
                 ansArr.push({
                     "Score": answer.Score,
-                    "ValidDate": answer.ValidDate
+                    "ValidTime": answer.ValidDate
                 })
             });
             common(res, err, err, ansArr);

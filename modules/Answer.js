@@ -9,7 +9,7 @@ var Schema = mongoose.Schema;
 var DailyAnswerSchema = new Schema({
     UserID: String,
     Timestamp: Number,
-    ValidDate: Number,
+    ValidTime: Number,
     QuestionnaireID: Number,
     Answers: [
         {
@@ -26,7 +26,7 @@ var DailyAnswerSchema = new Schema({
 var PeriodicAnswerSchema = new Schema({
     UserID: String,
     Timestamp: Number,
-    ValidDate: Number,
+    ValidTime: Number,
     QuestionnaireID: Number,
     Answers: [
         {

@@ -33,8 +33,8 @@ var getScore = function (QuestionnaireID, Answers) {
 
 router.get('/getLastDaily', function(req, res, next){
     let userid = req.UserID;
-    DailyAnswer.findOne({UserID:  userid}).sort({ ValidDate: -1 }).exec(function (err, docs) {
-            common(res, err, err, docs.ValidDate);
+    DailyAnswer.findOne({UserID:  userid}).sort({ ValidTime: -1 }).exec(function (err, docs) {
+            common(res, err, err, docs.ValidTime);
     });
 });
 
@@ -45,7 +45,7 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
         var newAnswer = new DailyAnswer({
             UserID: req.UserID,
             Timestamp: (new Date).getTime(),
-            ValidDate: req.body.ValidDate,
+            ValidTime: req.body.ValidTime,
             QuestionnaireID: req.params.QuestionnaireID,
             Answers: req.body.Answers
         });
@@ -54,7 +54,7 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
         var newAnswer = new PeriodicAnswer({
             UserID: req.UserID,
             Timestamp: (new Date).getTime(),
-            ValidDate: req.body.ValidDate,
+            ValidTime: req.body.ValidTime,
             QuestionnaireID: req.params.QuestionnaireID,
             Answers: req.body.Answers,
             Score: getScore(req.params.QuestionnaireID, req.body.Answers)
@@ -76,7 +76,7 @@ router.get('/answeredQuestionnaire', function (req, res) {
     PeriodicAnswer.find({
         UserID:  userID,
         QuestionnaireID: questionnaireID,
-        ValidDate: { $gte: start, $lte: realNow }
+        ValidTime: { $gte: start, $lte: realNow }
     }, function (err, docs) {
         common(res, err, err, docs.length>0);
     });
