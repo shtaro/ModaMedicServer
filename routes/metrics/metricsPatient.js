@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
-var common = require('../common');
-var StepsMetric = require('../../modules/Metrics').StepsMetric;
-var DistanceMetric = require('../../modules/Metrics').DistanceMetric;
-var CaloriesMetric = require('../../modules/Metrics').CaloriesMetric;
-var SleepMetric = require('../../modules/Metrics').SleepMetric;
-var AccelerometerMetric = require('../../modules/Metrics').AccelerometerMetric;
-var WeatherMetric = require('../../modules/Metrics').WeatherMetric;
-var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
+const express = require('express');
+const router = express.Router();
+const common = require('../common');
+const StepsMetric = require('../../modules/Metrics').StepsMetric;
+const DistanceMetric = require('../../modules/Metrics').DistanceMetric;
+const CaloriesMetric = require('../../modules/Metrics').CaloriesMetric;
+const SleepMetric = require('../../modules/Metrics').SleepMetric;
+const AccelerometerMetric = require('../../modules/Metrics').AccelerometerMetric;
+const WeatherMetric = require('../../modules/Metrics').WeatherMetric;
+const ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 
 
 var getDate = function (timestamp) {
@@ -101,45 +101,104 @@ router.post('/activity', function (req, res, next) {
 });
 
 
-router.get('/getMissingDates', function (req, res, next){
+router.get('/getMissingDates', async function (req, res, next){
     var userID = req.UserID;
     var days = req.query.days;
     var now = new Date();
     var realNow = now.getTime();
     var start = now.setHours(-(24*days),0,0,0);
-    var temp = 0;
     var ans = [];
-    var dates = [];
-    StepsMetric.find({
-            UserID: userID,
-            ValidDate: { $gte: start, $lte: realNow }
-        },
-        (function (err, docs) {
-            for(temp = start; temp <= realNow; temp+=(24*3600*1000)) {
-                var hasfound = false;
-                docs.forEach(function (doc) {
-                    if (doc.ValidDate < temp + (24 * 3600 * 1000) && doc.ValidDate >= temp) {
-                        hasfound = true;
-                    }
-                });
-                if (!hasfound)
-                    dates.push(temp);
-            }
-            ans.push({Steps: dates});
-        }));
-
-
+    var docs = [];
+    var dates= [];
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Steps");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Steps: dates});
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Calories");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Calories: dates});
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Distance");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Distance: dates});
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Sleep");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Sleep: dates});
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Accelerometer");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Accelerometer: dates});
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Weather");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Weather: dates});
+    docs = await getRecordsBetweenDates(userID, start, realNow, "Activity");
+    dates = await findDates(start, realNow, docs);
+    ans.push({Activity: dates});
     common(res,null,null,ans);
 });
 
-var getStepsBetweenDates = function(userID, start, realNow){
-    StepsMetric.find({
-            UserID: userID,
-            ValidDate: { $gte: start, $lte: realNow }
-        },
-        (function (err, docs) {
-            return docs;
-    }));
+var getRecordsBetweenDates = function(userID, start, realNow, metric){
+    var docs = [];
+    switch(metric){
+        case "Steps":
+            docs = StepsMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+        case "Calories":
+            docs = CaloriesMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+        case "Distance":
+            docs = DistanceMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+        case "Sleep":
+            docs = SleepMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+        case "Accelerometer":
+            docs = AccelerometerMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+        case "Weather":
+            docs = WeatherMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+        case "Activity":
+            docs = ActivityMetric.find({
+                UserID: userID,
+                ValidDate: { $gte: start, $lte: realNow }
+            }).exec();
+            break;
+    }
+    return docs;
+};
+
+var findDates = function(start, realNow, docs){
+    var temp;
+    var dates = [];
+    for(temp = start; temp <= realNow; temp+=(24*3600*1000)) {
+        var hasfound = false;
+        var i;
+        for(i=0; i<docs.length; i++) {
+            if (docs[i]._doc.ValidDate < temp + (24 * 3600 * 1000) && docs[i]._doc.ValidDate >= temp) {
+                hasfound = true;
+                break;
+            }
+        }
+        if (!hasfound)
+            dates.push(temp);
+    }
+    return dates;
 };
 
 module.exports = router;
