@@ -18,7 +18,7 @@ router.post('/getSteps', function (req, res, next) {
     }
     StepsMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -33,7 +33,7 @@ router.post('/getDistance', function (req, res, next) {
     }
     DistanceMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -48,7 +48,7 @@ router.post('/getCalories', function (req, res, next) {
     }
     CaloriesMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -63,7 +63,7 @@ router.post('/getSleep', function (req, res, next) {
     }
     SleepMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -78,7 +78,7 @@ router.post('/getAccelerometer', function (req, res, next) {
     }
     AccelerometerMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -93,7 +93,7 @@ router.post('/getWeather', function (req, res, next) {
     }
     WeatherMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
@@ -108,7 +108,7 @@ router.post('/getActivity', function (req, res, next) {
     }
     ActivityMetric.find({
             UserID: req.body.UserID,
-            Timestamp: { $gte: req.query.start_time, $lte: req.query.end_time }
+            ValidDate: { $gte: req.query.start_time, $lte: req.query.end_time }
         }
         , (function (err, docs) {
             common(res, err, err, docs);
