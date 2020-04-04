@@ -10,7 +10,7 @@ var WeatherMetric = require('../../modules/Metrics').WeatherMetric;
 var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 
 
-router.get('/getSteps', function (req, res, next) {
+router.post('/getSteps', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -25,7 +25,7 @@ router.get('/getSteps', function (req, res, next) {
         }));
 });
 
-router.get('/getDistance', function (req, res, next) {
+router.post('/getDistance', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -40,7 +40,7 @@ router.get('/getDistance', function (req, res, next) {
         }));
 });
 
-router.get('/getCalories', function (req, res, next) {
+router.post('/getCalories', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -55,7 +55,7 @@ router.get('/getCalories', function (req, res, next) {
         }));
 });
 
-router.get('/getSleep', function (req, res, next) {
+router.post('/getSleep', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -70,7 +70,7 @@ router.get('/getSleep', function (req, res, next) {
         }));
 });
 
-router.get('/getAccelerometer', function (req, res, next) {
+router.post('/getAccelerometer', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -85,7 +85,7 @@ router.get('/getAccelerometer', function (req, res, next) {
         }));
 });
 
-router.get('/getWeather', function (req, res, next) {
+router.post('/getWeather', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -100,7 +100,7 @@ router.get('/getWeather', function (req, res, next) {
         }));
 });
 
-router.get('/getActivity', function (req, res, next) {
+router.post('/getActivity', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;

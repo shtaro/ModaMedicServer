@@ -107,17 +107,39 @@ router.get('/getMissingDates', function (req, res, next){
     var now = new Date();
     var realNow = now.getTime();
     var start = now.setHours(-(24*days),0,0,0);
+    var temp = 0;
+    var ans = [];
+    var dates = [];
     StepsMetric.find({
             UserID: userID,
-            ValidDate: { $gte: lastTimestamp, $lte: now }
+            ValidDate: { $gte: start, $lte: realNow }
         },
         (function (err, docs) {
-            docs.forEach(function(metric){
-                if(metric.ValidDate>lastTimestamp)
-                    score = score + answer.AnswerID[0];
-        });
-    }));
+            for(temp = start; temp <= realNow; temp+=(24*3600*1000)) {
+                var hasfound = false;
+                docs.forEach(function (doc) {
+                    if (doc.ValidDate < temp + (24 * 3600 * 1000) && doc.ValidDate >= temp) {
+                        hasfound = true;
+                    }
+                });
+                if (!hasfound)
+                    dates.push(temp);
+            }
+            ans.push({Steps: dates});
+        }));
+
+
+    common(res,null,null,ans);
 });
 
+var getStepsBetweenDates = function(userID, start, realNow){
+    StepsMetric.find({
+            UserID: userID,
+            ValidDate: { $gte: start, $lte: realNow }
+        },
+        (function (err, docs) {
+            return docs;
+    }));
+};
 
 module.exports = router;
