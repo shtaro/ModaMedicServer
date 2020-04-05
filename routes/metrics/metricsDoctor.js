@@ -61,7 +61,7 @@ var checkTimes = function(start, end){
     }
 };
 
-router.post('/getSteps', async function (req, res, next) {
+router.get('/getSteps', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -89,7 +89,7 @@ router.post('/getSteps', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.post('/getDistance', async function (req, res, next) {
+router.get('/getDistance', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -117,7 +117,7 @@ router.post('/getDistance', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.post('/getCalories', async function (req, res, next) {
+router.get('/getCalories', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -145,7 +145,7 @@ router.post('/getCalories', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.post('/getSleep', async function (req, res, next) {
+router.get('/getSleep', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -173,7 +173,7 @@ router.post('/getSleep', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.post('/getAccelerometer', async function (req, res, next) {
+router.get('/getAccelerometer', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -201,7 +201,7 @@ router.post('/getAccelerometer', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.post('/getWeather', async function (req, res, next) {
+router.get('/getWeather', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -229,7 +229,7 @@ router.post('/getWeather', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.post('/getActivity', async function (req, res, next) {
+router.get('/getActivity', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
