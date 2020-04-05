@@ -38,9 +38,9 @@ module.exports.createUser = function(newUser, callback){
 };
 
 //gets user from db by username
-module.exports.getUserByUserID = function(userid, callback){
+module.exports.getUserByUserID = async function(userid, callback){
     var query = {UserID: userid};
-    User.findOne(query, callback);
+    await User.findOne(query, callback);
 };
 
 module.exports.getUserByName = async function(firstName, lastName, type, callback){

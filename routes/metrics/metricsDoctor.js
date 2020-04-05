@@ -43,6 +43,24 @@ var findMostRecent = function(docs, start, end){
     return ans;
 };
 
+var findUsers = async function(firstName, lastName){
+    var usersID = [];
+    const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean();
+    leanDoc.forEach(function(user){
+        usersID.push(user.UserID);
+    });
+    return usersID;
+};
+
+var checkTimes = function(start, end){
+    if (typeof(start) == 'undefined') {
+        start = 0;
+    }
+    if (typeof(end) == 'undefined') {
+        end = (new Date).getTime();
+    }
+};
+
 router.post('/getSteps', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
@@ -51,33 +69,27 @@ router.post('/getSteps', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var firstName=req.query.FirstName;
-    var lastName=req.query.LastName;
-    var usersID = [];
-    await User.getUserByName(firstName, lastName, 'patient', function (err, users) {
-
-        users.forEach(function(user){
-            usersID.push(user.UserID);
-        });
-    });
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
     if(usersID.length>0) {
-        await StepsMetric.find({
-                UserID: usersID[0],
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }
-            , (function (err, docs) {
-                if (docs.length > 0) {
-                    var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    common(res, err, err, ans);
-                } else
-                    common(res, err, err, docs);
-            }));
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await StepsMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
+        }
+        common(res, null, null, ans);
     }
     else
         common(res, null, "Not Found", null);
 });
 
-router.post('/getDistance', function (req, res, next) {
+router.post('/getDistance', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -85,21 +97,27 @@ router.post('/getDistance', function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    DistanceMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await DistanceMetric.find({
+                UserID: user,
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+            }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
         }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
-            }
-            else
-                common(res, err, err, docs);
-        }));
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
-router.post('/getCalories', function (req, res, next) {
+router.post('/getCalories', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -107,21 +125,27 @@ router.post('/getCalories', function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    CaloriesMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await CaloriesMetric.find({
+                UserID: user,
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+            }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
         }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
-            }
-            else
-                common(res, err, err, docs);
-        }));
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
-router.post('/getSleep', function (req, res, next) {
+router.post('/getSleep', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -129,21 +153,27 @@ router.post('/getSleep', function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    SleepMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await SleepMetric.find({
+                UserID: user,
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+            }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
         }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
-            }
-            else
-                common(res, err, err, docs);
-        }));
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
-router.post('/getAccelerometer', function (req, res, next) {
+router.post('/getAccelerometer', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -151,21 +181,27 @@ router.post('/getAccelerometer', function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    AccelerometerMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await AccelerometerMetric.find({
+                UserID: user,
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+            }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
         }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
-            }
-            else
-                common(res, err, err, docs);
-        }));
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
-router.post('/getWeather', function (req, res, next) {
+router.post('/getWeather', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -173,21 +209,27 @@ router.post('/getWeather', function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    WeatherMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await WeatherMetric.find({
+                UserID: user,
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+            }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
         }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
-            }
-            else
-                common(res, err, err, docs);
-        }));
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
-router.post('/getActivity', function (req, res, next) {
+router.post('/getActivity', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
@@ -195,18 +237,24 @@ router.post('/getActivity', function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    ActivityMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            var docs = await ActivityMetric.find({
+                UserID: user,
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+            }).lean();
+            if (docs.length > 0) {
+                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                ans.push({UserID: user, docs: onePerDay});
+            } else
+                ans.push({UserID: user, docs: docs})
         }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
-            }
-            else
-                common(res, err, err, docs);
-        }));
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
 
