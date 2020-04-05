@@ -8,6 +8,7 @@ var SleepMetric = require('../../modules/Metrics').SleepMetric;
 var AccelerometerMetric = require('../../modules/Metrics').AccelerometerMetric;
 var WeatherMetric = require('../../modules/Metrics').WeatherMetric;
 var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
+var User = require('../../modules/User');
 
 
 var findMostRecent = function(docs, start, end){
@@ -42,30 +43,46 @@ var findMostRecent = function(docs, start, end){
     return ans;
 };
 
-router.post('/getSteps', function (req, res, next) {
+router.post('/getSteps', async function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    StepsMetric.find({
-            UserID: req.body.UserID,
-            ValidTime: { $gte: req.query.start_time, $lte: req.query.end_time }
-        }
-        , (function (err, docs) {
-            if(docs.length>0) {
-                var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                common(res, err, err, ans);
+    var firstName=req.query.FirstName;
+    var lastName=req.query.LastName;
+    var usersID = [];
+    await User.getUserByName(firstName, lastName, 'patient', function (err, users) {
+
+        users.forEach(function(user){
+            usersID.push(user.UserID);
+        });
+    });
+    if(usersID.length>0) {
+        await StepsMetric.find({
+                UserID: usersID[0],
+                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
             }
-            else
-                common(res, err, err, docs);
-        }));
+            , (function (err, docs) {
+                if (docs.length > 0) {
+                    var ans = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    common(res, err, err, ans);
+                } else
+                    common(res, err, err, docs);
+            }));
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
 router.post('/getDistance', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
     DistanceMetric.find({
@@ -86,6 +103,8 @@ router.post('/getCalories', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
     CaloriesMetric.find({
@@ -106,6 +125,8 @@ router.post('/getSleep', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
     SleepMetric.find({
@@ -126,6 +147,8 @@ router.post('/getAccelerometer', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
     AccelerometerMetric.find({
@@ -146,6 +169,8 @@ router.post('/getWeather', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
     WeatherMetric.find({
@@ -166,6 +191,8 @@ router.post('/getActivity', function (req, res, next) {
     //if dates were not specified - query for all dates
     if (typeof(req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
+    }
+    if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
     ActivityMetric.find({

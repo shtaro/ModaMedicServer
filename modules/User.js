@@ -43,6 +43,11 @@ module.exports.getUserByUserID = function(userid, callback){
     User.findOne(query, callback);
 };
 
+module.exports.getUserByName = async function(firstName, lastName, type, callback){
+    var query = {First_Name: firstName, Last_Name: lastName, Type:type};
+    await User.find(query, callback);
+};
+
 module.exports.privateCheck = function(req, res, next) {
     console.log("private check");
     const token = req.header("x-auth-token");
