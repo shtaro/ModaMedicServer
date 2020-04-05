@@ -31,9 +31,9 @@ var getScore = function (QuestionnaireID, Answers) {
     return score;
 };
 
-router.get('/getLastDaily', function(req, res, next){
+router.get('/getLastDaily', async function(req, res){
     let userid = req.UserID;
-    DailyAnswer.findOne({UserID:  userid}).sort({ ValidTime: -1 }).exec(function (err, docs) {
+    await DailyAnswer.findOne({UserID:  userid}).lean().sort({ ValidTime: -1 }).exec(function (err, docs) {
             common(res, err, err, docs.ValidTime);
     });
 });
@@ -66,18 +66,18 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
 });
 
 
-router.get('/answeredQuestionnaire', function (req, res) {
+router.get('/answeredQuestionnaire', async function (req, res) {
     var userID = req.UserID;
     var days = req.query.days;
     var questionnaireID = req.query.questionnaireID;
     var now = new Date();
     var realNow = now.getTime();
     var start = now.setHours(-(24*days),0,0,0);
-    PeriodicAnswer.find({
+    await PeriodicAnswer.find({
         UserID:  userID,
         QuestionnaireID: questionnaireID,
         ValidTime: { $gte: start, $lte: realNow }
-    }, function (err, docs) {
+    }).lean().then(function (err, docs) {
         common(res, err, err, docs.length>0);
     });
 });

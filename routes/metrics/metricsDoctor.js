@@ -76,7 +76,7 @@ router.post('/getSteps', async function (req, res, next) {
             var docs = await StepsMetric.find({
                     UserID: user,
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-                }).lean();
+                }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});
@@ -104,7 +104,7 @@ router.post('/getDistance', async function (req, res, next) {
             var docs = await DistanceMetric.find({
                 UserID: user,
                 ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean();
+            }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});
@@ -132,7 +132,7 @@ router.post('/getCalories', async function (req, res, next) {
             var docs = await CaloriesMetric.find({
                 UserID: user,
                 ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean();
+            }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});
@@ -160,7 +160,7 @@ router.post('/getSleep', async function (req, res, next) {
             var docs = await SleepMetric.find({
                 UserID: user,
                 ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean();
+            }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});
@@ -188,7 +188,7 @@ router.post('/getAccelerometer', async function (req, res, next) {
             var docs = await AccelerometerMetric.find({
                 UserID: user,
                 ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean();
+            }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});
@@ -216,7 +216,7 @@ router.post('/getWeather', async function (req, res, next) {
             var docs = await WeatherMetric.find({
                 UserID: user,
                 ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean();
+            }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});
@@ -244,7 +244,7 @@ router.post('/getActivity', async function (req, res, next) {
             var docs = await ActivityMetric.find({
                 UserID: user,
                 ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean();
+            }).lean().exec();
             if (docs.length > 0) {
                 var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
                 ans.push({UserID: user, docs: onePerDay});

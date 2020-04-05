@@ -134,50 +134,50 @@ router.get('/getMissingDates', async function (req, res, next){
     common(res,null,null,ans);
 });
 
-var getRecordsBetweenDates = function(userID, start, realNow, metric){
+var getRecordsBetweenDates = async function(userID, start, realNow, metric){
     var docs = [];
     switch(metric){
         case "Steps":
-            docs = StepsMetric.find({
+            docs = await StepsMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
         case "Calories":
-            docs = CaloriesMetric.find({
+            docs = await CaloriesMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
         case "Distance":
-            docs = DistanceMetric.find({
+            docs = await DistanceMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
         case "Sleep":
-            docs = SleepMetric.find({
+            docs = await SleepMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
         case "Accelerometer":
-            docs = AccelerometerMetric.find({
+            docs = await AccelerometerMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
         case "Weather":
-            docs = WeatherMetric.find({
+            docs = await WeatherMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
         case "Activity":
-            docs = ActivityMetric.find({
+            docs = await ActivityMetric.find({
                 UserID: userID,
                 ValidTime: { $gte: start, $lte: realNow }
-            }).exec();
+            }).lean().exec();
             break;
     }
     return docs;
