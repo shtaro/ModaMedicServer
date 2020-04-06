@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../modules/User');
 var common = require('./common');
+var jwt = require('jsonwebtoken');
+var tempToken = "password";
 
 
 router.post('/getUser', function(req, res, next) {
@@ -25,15 +27,19 @@ router.get('/getDateOfSurgery', function(req, res, next) {
   });
 });
 
-router.get('/list', (req,res) => {
-  User.find((err, docs) => {
-    if(!err){
-      res.send({
-        list: docs
-      });
-    }
-    else {
-      console.log('Failed to retrieve the Course List: '+ err);
+
+router.post('/askChangePassword', async function (req, res) {
+  await User.getUserByUserID(req.UserID, function (err, user) {
+    if (user) {
+      var payload = {
+        UserID: user.UserID, Type: user.Type
+      };
+      var options = {expiresIn: "300000ms"};
+      var token = jwt.sign(payload, tempToken, options);
+      common(res, err, err, token);
+    } else {
+      var error = {'message': 'User not exists'};
+      common(res, error, error, null);
     }
   });
 });

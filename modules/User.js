@@ -16,6 +16,8 @@ var UserSchema = new Schema({
     BirthDate: Number,
     Type: [String],
     DateOfSurgery: Number,
+    VerificationQuestion: Number,
+    VerificationAnswer: String,
     Questionnaires: [
         {
         QuestionnaireID: Number,
@@ -29,6 +31,7 @@ var UserSchema = new Schema({
 var User = module.exports = mongoose.model('User', UserSchema,'User');
 
 var secret = "secret";
+var tempToken = "password";
 
 //creates user in db
 module.exports.createUser = function(newUser, callback){
@@ -119,6 +122,24 @@ module.exports.adminCheck = function(req, res, next){
     }
 };
 
+module.exports.passwordCheck = function(req, res, next) {
+    console.log("password check");
+    const token = req.header("x-auth-token");
+    // no token
+    if (!token) res.status(401).send("Access denied. No token provided.");
+    // verify token
+    try {
+        const decoded = jwt.verify(token, tempToken);
+        var userId = decoded.UserID;
+        req.UserID = userId;
+        req.decoded = decoded;
+        console.log("checked");
+        next(); //move on to the actual function
+    } catch (exception) {
+        res.status(400).send("Invalid token.");
+    }
+};
+
 //returns if entered password matches saved password (using hash)
 module.exports.comparePassword = function(candidatePassword, hash, callback){
     var hasedPassword=service.hashElement(candidatePassword);
@@ -134,10 +155,6 @@ module.exports.changePassword = function(user, newPassword, callback){
     user.save(callback);
 };
 
-//get all users id
-// module.exports.getAllUsersIds = function(){
-//     User.
-// };
 
 
 
