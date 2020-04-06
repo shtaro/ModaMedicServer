@@ -51,7 +51,6 @@ router.post('/register', async function (req, res, next) {
 router.post('/login', async function(req, res, next) {
   await User.getUserByUserID(req.body.UserID, function (err,user) {
     if(user){
-      console.log(service.hashElement(req.body.Password));
       if(user.Password === service.hashElement(req.body.Password)){
         var payload = {
           UserID: user.UserID, Type: user.Type
@@ -124,37 +123,6 @@ router.post('/passwordChangeCheck/changePassword', async function (req, res) {
     })
   });
 });
-
-/***
-    User.changePassword(user, New_Password,  async function (err) {
-      if (!err) {
-        var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'modamedic4@gmail.com',
-            pass: 'moda1234'
-          }
-        });
-
-        var mailOptions = {
-          from: 'modamedic4@gmail.com',
-          to: user.Email,
-          subject: 'Password Reset for ModaMedic',
-          text: 'Your new password is: ' + New_Password + '\n You can change it after you log in.'
-        };
-
-        await transporter.sendMail(mailOptions, function (error, info) {
-          if (error) {
-            common(res, err, err, null);
-          } else {
-            common(res, err, "Mail Sent", null);
-          }
-        });
-      }
-    });
-  });
-});
-**/
 
 var RandomString = function () {
   var text = "";
