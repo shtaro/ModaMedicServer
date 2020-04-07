@@ -9,6 +9,7 @@ var AccelerometerMetric = require('../../modules/Metrics').AccelerometerMetric;
 var WeatherMetric = require('../../modules/Metrics').WeatherMetric;
 var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 var User = require('../../modules/User');
+var Permission = require('../../modules/Permission');
 
 
 var findMostRecent = function(docs, start, end){
@@ -43,11 +44,17 @@ var findMostRecent = function(docs, start, end){
     return ans;
 };
 
-var findUsers = async function(firstName, lastName){
+var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];
-    const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean();
-    leanDoc.forEach(function(user){
-        usersID.push(user.UserID);
+    const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean().exec();
+    leanDoc.forEach( function(user){
+        Permission.getOnePermission(doctorID, user.UserID, function (err, permission) {
+            if(permission)
+                usersID.push({UserID: user.UserID, Permission: "yes"});
+            else
+                usersID.push({UserID: user.UserID, Permission: "no"});
+        });
+
     });
     return usersID;
 };
@@ -69,19 +76,23 @@ router.get('/getSteps', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await StepsMetric.find({
+            if(user.Permission==="yes") {
+                var docs = await StepsMetric.find({
                     UserID: user,
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -97,19 +108,23 @@ router.get('/getDistance', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await DistanceMetric.find({
-                UserID: user,
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+            if(user.Permission==="yes") {
+                var docs = await DistanceMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean().exec();
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -125,19 +140,23 @@ router.get('/getCalories', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await CaloriesMetric.find({
-                UserID: user,
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+            if(user.Permission==="yes") {
+                var docs = await CaloriesMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean().exec();
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -153,19 +172,23 @@ router.get('/getSleep', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await SleepMetric.find({
-                UserID: user,
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+            if(user.Permission==="yes") {
+                var docs = await SleepMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean().exec();
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -181,19 +204,23 @@ router.get('/getAccelerometer', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await AccelerometerMetric.find({
-                UserID: user,
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+            if(user.Permission==="yes") {
+                var docs = await AccelerometerMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean().exec();
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -209,19 +236,23 @@ router.get('/getWeather', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await WeatherMetric.find({
-                UserID: user,
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+            if(user.Permission==="yes") {
+                var docs = await WeatherMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean().exec();
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -237,19 +268,23 @@ router.get('/getActivity', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var usersID = await findUsers(req.query.FirstName, req.query.LastName);
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            var docs = await ActivityMetric.find({
-                UserID: user,
-                ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-            }).lean().exec();
-            if (docs.length > 0) {
-                var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
-                ans.push({UserID: user, docs: onePerDay});
-            } else
-                ans.push({UserID: user, docs: docs})
+            if(user.Permission==="yes") {
+                var docs = await ActivityMetric.find({
+                    UserID: user,
+                    ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                }).lean().exec();
+                if (docs.length > 0) {
+                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    ans.push({UserID: user, docs: onePerDay});
+                } else
+                    ans.push({UserID: user, docs: docs});
+            }
+            else
+                ans.push({UserID: user, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
