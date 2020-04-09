@@ -40,13 +40,13 @@ router.get('/getLastDaily', async function(req, res){
 
 
 /* POST answers to daily */
-router.post('/sendAnswers/:QuestionnaireID', async function (req, res, next) {
-    if(req.params.QuestionnaireID===0) {
+router.post('/sendAnswers', async function (req, res, next) {
+    if(req.body.QuestionnaireID===0) {
         var newAnswer = new DailyAnswer({
             UserID: req.UserID,
             Timestamp: (new Date).getTime(),
             ValidTime: req.body.ValidTime,
-            QuestionnaireID: req.params.QuestionnaireID,
+            QuestionnaireID: req.body.QuestionnaireID,
             Answers: req.body.Answers
         });
     }
@@ -55,9 +55,9 @@ router.post('/sendAnswers/:QuestionnaireID', async function (req, res, next) {
             UserID: req.UserID,
             Timestamp: (new Date).getTime(),
             ValidTime: req.body.ValidTime,
-            QuestionnaireID: req.params.QuestionnaireID,
+            QuestionnaireID: req.body.QuestionnaireID,
             Answers: req.body.Answers,
-            Score: await getScore(req.params.QuestionnaireID, req.body.Answers)
+            Score: await getScore(req.body.QuestionnaireID, req.body.Answers)
         });
     }
     newAnswer.save(function (error) {
@@ -73,7 +73,7 @@ router.get('/answeredQuestionnaire', async function (req, res) {
     var now = new Date();
     var realNow = now.getTime();
     var start = now.setHours(-(24*days),0,0,0);
-    if(questionnaireID===0){
+    if(questionnaireID==0){
         var docs = await DailyAnswer.find({
             UserID:  userID,
             QuestionnaireID: questionnaireID,
