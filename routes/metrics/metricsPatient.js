@@ -190,7 +190,7 @@ var findDates = function(start, realNow, docs){
         var hasfound = false;
         var i;
         for(i=0; i<docs.length; i++) {
-            if (docs[i]._doc.ValidTime < temp + (24 * 3600 * 1000) && docs[i]._doc.ValidTime >= temp) {
+            if (docs[i].ValidTime < temp + (24 * 3600 * 1000) && docs[i].ValidTime >= temp) {
                 hasfound = true;
                 break;
             }
