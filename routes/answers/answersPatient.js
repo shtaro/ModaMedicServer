@@ -34,13 +34,13 @@ var getScore = function (QuestionnaireID, Answers) {
 router.get('/getLastDaily', async function(req, res){
     let userid = req.UserID;
     await DailyAnswer.findOne({UserID:  userid}).lean().sort({ ValidTime: -1 }).exec(function (err, docs) {
-            common(res, err, err, docs.ValidTime);
+        common(res, err, err, docs.ValidTime);
     });
 });
 
 
 /* POST answers to daily */
-router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
+router.post('/sendAnswers/:QuestionnaireID', async function (req, res, next) {
     if(req.params.QuestionnaireID===0) {
         var newAnswer = new DailyAnswer({
             UserID: req.UserID,
@@ -57,7 +57,7 @@ router.post('/sendAnswers/:QuestionnaireID', function (req, res, next) {
             ValidTime: req.body.ValidTime,
             QuestionnaireID: req.params.QuestionnaireID,
             Answers: req.body.Answers,
-            Score: getScore(req.params.QuestionnaireID, req.body.Answers)
+            Score: await getScore(req.params.QuestionnaireID, req.body.Answers)
         });
     }
     newAnswer.save(function (error) {
@@ -73,13 +73,22 @@ router.get('/answeredQuestionnaire', async function (req, res) {
     var now = new Date();
     var realNow = now.getTime();
     var start = now.setHours(-(24*days),0,0,0);
-    await PeriodicAnswer.find({
-        UserID:  userID,
-        QuestionnaireID: questionnaireID,
-        ValidTime: { $gte: start, $lte: realNow }
-    }).lean().then(function (err, docs) {
-        common(res, err, err, docs.length>0);
-    });
+    if(questionnaireID===0){
+        var docs = await DailyAnswer.find({
+            UserID:  userID,
+            QuestionnaireID: questionnaireID,
+            ValidTime: { $gte: start, $lte: realNow }
+        }).lean().exec();
+        common(res, null, null, docs.length>0);
+    }
+    else{
+        var docs = await PeriodicAnswer.find({
+            UserID:  userID,
+            QuestionnaireID: questionnaireID,
+            ValidTime: { $gte: start, $lte: realNow }
+        }).lean().exec();
+        common(res, null, null, docs.length>0);
+    }
 });
 
 

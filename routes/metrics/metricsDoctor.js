@@ -47,15 +47,13 @@ var findMostRecent = function(docs, start, end){
 var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];
     const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean().exec();
-    leanDoc.forEach( function(user){
-        Permission.getOnePermission(doctorID, user.UserID, function (err, permission) {
-            if(permission)
-                usersID.push({UserID: user.UserID, Permission: "yes"});
-            else
-                usersID.push({UserID: user.UserID, Permission: "no"});
-        });
-
-    });
+    for(const user of leanDoc){
+        var permission = await Permission.findOne({DoctorID: doctorID, PatientID: user.UserID}).lean().exec();
+        if(permission)
+            usersID.push({UserID: user.UserID, Permission: "yes"});
+        else
+            usersID.push({UserID: user.UserID, Permission: "no"});
+    }
     return usersID;
 };
 
@@ -86,7 +84,7 @@ router.get('/getSteps', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
@@ -118,7 +116,7 @@ router.get('/getDistance', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
@@ -150,7 +148,7 @@ router.get('/getCalories', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
@@ -182,7 +180,7 @@ router.get('/getSleep', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
@@ -214,7 +212,7 @@ router.get('/getAccelerometer', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
@@ -246,7 +244,7 @@ router.get('/getWeather', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
@@ -278,7 +276,7 @@ router.get('/getActivity', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user, docs: onePerDay});
                 } else
                     ans.push({UserID: user, docs: docs});
