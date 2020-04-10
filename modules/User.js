@@ -151,8 +151,14 @@ module.exports.comparePassword = function(candidatePassword, hash, callback){
 
 //changes password saved in db
 module.exports.changePassword = function(user, newPassword, callback){
-    user.Password = service.hashElement(newPassword);
-    user.save(callback);
+    if(typeof(newPassword) == 'undefined') {
+        error = {'message': 'Error has occured. Please try again.'};
+        callback(error);
+    }
+    else{
+        user.Password = service.hashElement(newPassword);
+        user.save(callback);
+    }
 };
 
 

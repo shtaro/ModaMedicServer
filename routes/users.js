@@ -115,7 +115,7 @@ router.post('/passwordChangeCheck/changePassword', async function (req, res) {
     if (err) throw err;
     User.changePassword(user, req.body.NewPassword, function (err) {
       if (err) {
-        error = {'message': 'Error has occured. Please try again.'}
+        error = {'message': 'Error has occured. Please try again.'};
         common(res, error, 'Error has occured. Please try again.', null);
       } else {
         common(res, false, "Password Changed", null);
