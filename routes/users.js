@@ -30,7 +30,7 @@ router.post('/register', async function (req, res, next) {
         Password: service.hashElement(req.body.Password),
         First_Name: req.body.First_Name,
         Last_Name: req.body.Last_Name,
-        BirthDate: req.body.BirthDate,
+        BirthDate: (new Date(req.body.BirthDate)).setHours(0,0,0,0),
         Type: req.body.Type,
         DateOfSurgery: req.body.DateOfSurgery,
         Questionnaires: req.body.Questionnaires,
