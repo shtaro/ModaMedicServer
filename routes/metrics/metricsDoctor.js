@@ -10,38 +10,15 @@ var WeatherMetric = require('../../modules/Metrics').WeatherMetric;
 var ActivityMetric = require('../../modules/Metrics').ActivityMetric;
 var User = require('../../modules/User');
 var Permission = require('../../modules/Permission');
+var service = require('../../service');
 
-
-var findMostRecent = function(docs, start, end){
-    var ans = [];
-    var realStart;
-    if(start!==0)
-        realStart = (new Date(start)).setHours(-(24),0,0,0);
-    else{
-        var oldest= docs[0];
-        docs.forEach(function(doc){
-            if(doc.ValidTime<oldest.ValidTime)
-                oldest=doc;
-        });
-        realStart = (new Date(oldest.ValidTime)).setHours(0,0,0,0);
+var checkTimes = function(start, end){
+    if (typeof(start) == 'undefined') {
+        start = 0;
     }
-    var realEnd = (new Date(end)).setHours(24, 0, 0, 0);
-    for(var temp = realStart; temp <= realEnd; temp += (24 * 3600 * 1000)){
-        var docsPerDay = [];
-        docs.forEach(function(doc){
-            if(doc.ValidTime>= temp && doc.ValidTime< (temp + (24 * 3600 * 1000)))
-                docsPerDay.push(doc);
-        });
-        if(docsPerDay.length>0) {
-            var recent = docsPerDay[0];
-            docsPerDay.forEach(function (doc2) {
-                if (doc2.ValidTime > recent.ValidTime)
-                    recent = doc2;
-            });
-            ans.push(recent);
-        }
+    if (typeof(end) == 'undefined') {
+        end = (new Date).getTime();
     }
-    return ans;
 };
 
 var findUsers = async function(firstName, lastName, doctorID){
@@ -55,15 +32,6 @@ var findUsers = async function(firstName, lastName, doctorID){
             usersID.push({UserID: user.UserID, Permission: "no"});
     }
     return usersID;
-};
-
-var checkTimes = function(start, end){
-    if (typeof(start) == 'undefined') {
-        start = 0;
-    }
-    if (typeof(end) == 'undefined') {
-        end = (new Date).getTime();
-    }
 };
 
 router.get('/getSteps', async function (req, res, next) {
@@ -84,7 +52,7 @@ router.get('/getSteps', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
@@ -116,7 +84,7 @@ router.get('/getDistance', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
@@ -148,7 +116,7 @@ router.get('/getCalories', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
@@ -180,7 +148,7 @@ router.get('/getSleep', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
@@ -212,7 +180,7 @@ router.get('/getAccelerometer', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
@@ -244,7 +212,7 @@ router.get('/getWeather', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
@@ -276,7 +244,7 @@ router.get('/getActivity', async function (req, res, next) {
                     ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
                 }).lean().exec();
                 if (docs.length > 0) {
-                    var onePerDay = await findMostRecent(docs, req.query.start_time, req.query.end_time);
+                    var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                     ans.push({UserID: user.UserID, docs: onePerDay});
                 } else
                     ans.push({UserID: user.UserID, docs: docs});
