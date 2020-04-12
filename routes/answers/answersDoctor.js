@@ -59,27 +59,44 @@ router.get('/getDailyAnswers', async function (req, res, next) {
         common(res, null, "Not Found", null);
 });
 
-router.get('/getPeriodicAnswers/:QuestionnaireID', async function (req, res, next) {
+router.get('/getPeriodicAnswers', async function (req, res, next) {
     if (typeof (req.query.start_time) == 'undefined') {
         req.query.start_time = 0;
     }
     if (typeof (req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
-    var ansArr=[];
-    await PeriodicAnswer.find({
-            UserID: req.body.UserID,
-            QuestionnaireID: req.params.QuestionnaireID,
-            ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-        }).lean().then(function (err, docs) {
-            docs.forEach(function(answer){
-                ansArr.push({
-                    "Score": answer.Score,
-                    "ValidTime": answer.ValidTime
-                })
-            });
-            common(res, err, err, ansArr);
-        });
+    var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
+    if(usersID.length>0) {
+        var ans = [];
+        for (const user of usersID) {
+            if(user.Permission==="yes") {
+                var questionnaires = [];
+                let userObj = await User.findOne({UserID: user.UserID}).lean().exec();
+                questionnaires = userObj.Questionnaires;
+                for(const quest of questionnaires){
+                    var docs = await PeriodicAnswer.find({
+                        UserID: user.UserID,
+                        QuestionnaireID: quest.QuestionnaireID,
+                        ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                    }).lean().exec();
+                    if (docs.length > 0) {
+                        var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
+                        let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: onePerDay};
+                        ans.push({UserID: user.UserID, docs: docs2});
+                    } else {
+                        let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: docs};
+                        ans.push({UserID: user.UserID, docs: docs2});
+                    }
+                }
+            }
+            else
+                ans.push({UserID: user.UserID, docs: "No Permission"});
+        }
+        common(res, null, null, ans);
+    }
+    else
+        common(res, null, "Not Found", null);
 });
 
 

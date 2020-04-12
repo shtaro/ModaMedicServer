@@ -1,6 +1,4 @@
 var crypto = require('crypto');
-var Permission = require('./modules/Permission');
-var User = require('./modules/User');
 
 
 module.exports.hashElement = function (element) {
