@@ -1,7 +1,7 @@
 [
   {
     "QuestionnaireID" : 0,
-    "QuestionnaireText" : "שאלון יומי",
+    "QuestionnaireText" : "יומי",
     "QuestionnaireEnglishText" : "Daily",
     "Questions" :
     [

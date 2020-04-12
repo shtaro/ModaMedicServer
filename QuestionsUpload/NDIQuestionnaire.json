@@ -1,7 +1,7 @@
 [
   {
     "QuestionnaireID" : 2,
-    "QuestionnaireText" : "שאלון תפקוד צוואר",
+    "QuestionnaireText" : "תפקוד צוואר",
     "QuestionnaireEnglishText" : "Neck Disability Index",
     "Questions" :
       [

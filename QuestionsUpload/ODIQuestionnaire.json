@@ -1,7 +1,7 @@
 [
   {
     "QuestionnaireID" : 1,
-    "QuestionnaireText" : "שאלון תפקוד גב תחתון",
+    "QuestionnaireText" : "תפקוד גב תחתון",
     "QuestionnaireEnglishText" : "Oswestry Disability Index",
     "Questions" :
       [
