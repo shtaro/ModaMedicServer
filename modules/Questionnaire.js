@@ -9,6 +9,7 @@ var Schema = mongoose.Schema;
 var QuestionnaireSchema = new Schema({
     QuestionnaireID: Number,
     QuestionnaireText: String,
+    QuestionnaireEnglishText: String,
     Questions: [
         {
             QuestionID: Number,
