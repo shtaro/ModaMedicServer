@@ -1,7 +1,8 @@
 [
   {
     "QuestionnaireID" : 3,
-    "QuestionnaireText" : "Lower Extremity Functional Scale",
+    "QuestionnaireText" : "שאלון תפקוד גף תחתון",
+    "QuestionnaireEnglishText" : "Lower Extremity Functional Scale",
     "Questions" :
     [
       {
