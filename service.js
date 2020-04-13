@@ -9,8 +9,10 @@ module.exports.hashElement = function (element) {
 module.exports.findMostRecent = function(docs, start, end){
     var ans = [];
     var realStart;
-    if(start!==0)
-        realStart = (new Date(start)).setHours(-(24),0,0,0);
+    if(start!==0) {
+        var date = new Date(start);
+        realStart = date.setHours(0, 0, 0, 0);
+    }
     else{
         var oldest= docs[0];
         docs.forEach(function(doc){

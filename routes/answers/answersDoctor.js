@@ -34,6 +34,8 @@ router.get('/getDailyAnswers', async function (req, res, next) {
     if (typeof (req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -66,6 +68,8 @@ router.get('/getPeriodicAnswers', async function (req, res, next) {
     if (typeof (req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -75,18 +79,20 @@ router.get('/getPeriodicAnswers', async function (req, res, next) {
                 let userObj = await User.findOne({UserID: user.UserID}).lean().exec();
                 questionnaires = userObj.Questionnaires;
                 for(const quest of questionnaires){
-                    var docs = await PeriodicAnswer.find({
-                        UserID: user.UserID,
-                        QuestionnaireID: quest.QuestionnaireID,
-                        ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
-                    }).lean().exec();
-                    if (docs.length > 0) {
-                        var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                        let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: onePerDay};
-                        ans.push({UserID: user.UserID, docs: docs2});
-                    } else {
-                        let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: docs};
-                        ans.push({UserID: user.UserID, docs: docs2});
+                    if(quest.QuestionnaireID!=0) {
+                        var docs = await PeriodicAnswer.find({
+                            UserID: user.UserID,
+                            QuestionnaireID: quest.QuestionnaireID,
+                            ValidTime: {$gte: req.query.start_time, $lte: req.query.end_time}
+                        }).lean().exec();
+                        if (docs.length > 0) {
+                            var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
+                            let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: onePerDay};
+                            ans.push({UserID: user.UserID, docs: docs2});
+                        } else {
+                            let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: docs};
+                            ans.push({UserID: user.UserID, docs: docs2});
+                        }
                     }
                 }
             }
