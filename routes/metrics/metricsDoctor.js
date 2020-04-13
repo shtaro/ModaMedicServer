@@ -42,6 +42,8 @@ router.get('/getSteps', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -74,6 +76,8 @@ router.get('/getDistance', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -106,6 +110,8 @@ router.get('/getCalories', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -138,6 +144,8 @@ router.get('/getSleep', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -170,6 +178,8 @@ router.get('/getAccelerometer', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -202,6 +212,8 @@ router.get('/getWeather', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
@@ -234,6 +246,8 @@ router.get('/getActivity', async function (req, res, next) {
     if (typeof(req.query.end_time) == 'undefined') {
         req.query.end_time = (new Date).getTime();
     }
+    req.query.start_time = parseFloat(req.query.start_time);
+    req.query.end_time = parseFloat(req.query.end_time);
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
