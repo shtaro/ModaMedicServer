@@ -26,11 +26,16 @@ def insert_to_collection(collenctin_name, questionnaire):
 
 
 def upload_periodic_questionnaire():
-    file_path = 'ODIQuestionnaire.json'
+    file_path = 'EQ5D.json'
     questions = questions_from_file(file_path)
+    file_path2 = 'EQ5DVas.json'
+    questions2 = questions_from_file(file_path2)
     if len(questions) > 0:
         #dropCollection("Questionnaire")
         insert_to_collection("Questionnaire", questions)
+    if len(questions2) > 0:
+        #dropCollection("Questionnaire")
+        insert_to_collection("Questionnaire", questions2)
 
 
 def upload_daily_questionnaire():
@@ -56,8 +61,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
     upload_periodic_questionnaire()
     print("periodic uploaded")
-    upload_daily_questionnaire()
-    print("daily uploaded")
+    #upload_daily_questionnaire()
+    #print("daily uploaded")
     sys.stdout.flush()
     """
     if args.daily:

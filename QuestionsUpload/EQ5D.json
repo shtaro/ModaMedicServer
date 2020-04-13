@@ -1,0 +1,134 @@
+[
+  {
+    "QuestionnaireID" : 5,
+    "QuestionnaireText" : "איכות חיים",
+    "QuestionnaireEnglishText" : "EQ-5D",
+    "Questions" :
+    [
+      {
+        "QuestionID" : 0,
+        "QuestionText":"ניידות",
+        "Type":"Single",
+        "Answers":
+        [
+          {
+            "answerID": 0,
+            "answerText": "אין לי בעיות הליכה"
+          },
+          {
+            "answerID": 1,
+            "answerText": "יש לי בעיות הליכה קלות"
+          },
+          {
+            "answerID": 2,
+            "answerText": "יש לי בעיות הליכה במידה בינונית"
+          },
+          {
+            "answerID": 3,
+            "answerText": "יש לי בעיות הליכה חמורות"
+          },
+          {
+            "answerID": 4,
+            "answerText": "איני מסוגל ללדת"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 1,
+        "QuestionText":"טיפול עצמי",
+        "Type":"Single",
+        "Answers" :
+        [
+          {
+            "answerID": 0,
+            "answerText": "אין לי בעיות להתרחץ או להתלבש בעצמי"
+          },
+          {	"answerID" : 1,
+            "answerText" : "יש לי בעיות קלות להתרחץ או להתלבש בעצמי"
+          },
+          {	"answerID" : 2,
+            "answerText" : "יש לי בעיות להתרחץ או להתלבש בעצמי במידה בינונית"
+          },
+          {	"answerID" : 3,
+            "answerText" : "יש לי בעיות חמורות להתרחץ או להתלבש בעצמי"
+          },
+          {	"answerID" : 4,
+            "answerText" : "אינני מסוגל/ת להתרחץ או להתלבש בעצמי"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 2,
+        "QuestionText":"פעילויות רגילות (כגון עבודה, לימודים, עבודות בית, משפחה או פעילויות פנאי)",
+        "Type":"Single",
+        "Answers" :
+        [
+          {
+            "answerID": 0,
+            "answerText": "אין לי בעיות לעסוק בפעילויות הרגילות שלי"
+          },
+          {	"answerID" : 1,
+            "answerText" : "יש לי בעיות קלות לעסוק בפעילויות הרגילות שלי"
+          },
+          {	"answerID" : 2,
+            "answerText" : "יש לי בעיות לעסוק בפעילויות הרגילות שלי במידה בינונית"
+          },
+          {	"answerID" : 3,
+            "answerText" : "יש לי בעיות חמורות לעסוק בפעילויות הרגילות שלי"
+          },
+          {	"answerID" : 4,
+            "answerText" : "אינני מסוגל/ת לעסוק בפעילויות הרגילות שלי"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 3,
+        "QuestionText":"כאב / אי נוחות",
+        "Type":"Single",
+        "Answers" :
+        [
+          {
+            "answerID": 0,
+            "answerText": "אין לי כאב או אי נוחות"
+          },
+          {	"answerID" : 1,
+            "answerText" : "יש לי כאב או אי נוחות במידה מועטה"
+          },
+          {	"answerID" : 2,
+            "answerText" : "יש לי כאב או אי נוחות במידה בינונית"
+          },
+          {	"answerID" : 3,
+            "answerText" : "יש לי כאב חמור או אי נוחות במידה רבה"
+          },
+          {	"answerID" : 4,
+            "answerText" : "יש לי כאב או אי נוחות קיצוניים"
+          }
+        ]
+      },
+      {
+        "QuestionID" : 4,
+        "QuestionText":"חרדה / דכאון",
+        "Type":"Single",
+        "Answers" :
+        [
+          {
+            "answerID": 0,
+            "answerText": "אינני חרד/ה או מדוכא/ת"
+          },
+          {	"answerID" : 1,
+            "answerText" : "אני חרד/ה או מדוכא/ת במידה מועטה"
+          },
+          {	"answerID" : 2,
+            "answerText" : "אני חרד/ה או מדוכא/ת במידה בינונית"
+          },
+          {	"answerID" : 3,
+            "answerText" : "אני חרד/ה או מדוכא/ת במידה רבה"
+          },
+          {	"answerID" : 4,
+            "answerText" : "אני חרד/ה או מדוכא/ת באופן קיצוני"
+          }
+        ]
+      }
+    ]
+  }
+]

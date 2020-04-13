@@ -1,34 +1,54 @@
 var express = require('express');
 var router = express.Router();
 var common = require('../common');
+var csv = require('csvtojson');
 var DailyAnswer = require('../../modules/Answer').DailyAnswer;
 var PeriodicAnswer = require('../../modules/Answer').PeriodicAnswer;
 
 
-var getScore = function (QuestionnaireID, Answers) {
+var getScore = async function (QuestionnaireID, Answers) {
     var score=0;
     switch(QuestionnaireID){
-        case "1":
+        case 1:
             Answers.forEach(function(answer){
                 if(answer.AnswerID.length>0)
                     score = score + answer.AnswerID[0];
             });
             score = score*2;
             break;
-        case "2":
+        case 2:
             Answers.forEach(function(answer){
                 if(answer.AnswerID.length>0)
                     score = score + answer.AnswerID[0];
             });
             break;
-        case "3":
+        case 3:
             Answers.forEach(function(answer){
                 if(answer.AnswerID.length>0)
                     score = score + answer.AnswerID[0];
             });
+            break;
+        case 5:
+            var answersString = "";
+            Answers.forEach(function(answer){
+                answersString = answersString + (answer.AnswerID[0]).toString();
+            });
+            var results = await csv().fromFile('eq5dCalc.csv');
+            score = await searchForScore(results, answersString);
+            break;
+        case 6:
+            score = Answers;
             break;
     }
     return score;
+};
+
+var searchForScore = function(results, answersString){
+    for(const row of results){
+        if(row.answers == answersString){
+            return row.spain;
+        }
+    }
 };
 
 router.get('/getLastDaily', async function(req, res){
@@ -41,7 +61,7 @@ router.get('/getLastDaily', async function(req, res){
 
 /* POST answers to daily */
 router.post('/sendAnswers', async function (req, res, next) {
-    if(req.body.QuestionnaireID===0) {
+    if(req.body.QuestionnaireID==0) {
         var newAnswer = new DailyAnswer({
             UserID: req.UserID,
             Timestamp: (new Date).getTime(),
@@ -51,13 +71,14 @@ router.post('/sendAnswers', async function (req, res, next) {
         });
     }
     else{
+        var score = await getScore(req.body.QuestionnaireID, req.body.Answers);
         var newAnswer = new PeriodicAnswer({
             UserID: req.UserID,
             Timestamp: (new Date).getTime(),
             ValidTime: req.body.ValidTime,
             QuestionnaireID: req.body.QuestionnaireID,
             Answers: req.body.Answers,
-            Score: await getScore(req.body.QuestionnaireID, req.body.Answers)
+            Score: score
         });
     }
     newAnswer.save(function (error) {

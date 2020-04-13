@@ -1,0 +1,17 @@
+[
+  {
+    "QuestionnaireID" : 6,
+    "QuestionnaireText" : "דירוג איכות חיים",
+    "QuestionnaireEnglishText" : "EQ5D Number",
+    "Questions" :
+    [
+      {
+        "QuestionID" : 0,
+        "QuestionText":"כיצד היית מדרג/ת את מצב בריאותך היום?",
+        "Type":"EQ5",
+        "Best":"המצב הבריאותי הטוב ביותר שאת/ה יכול/ה לדמיין",
+        "Worst":"המצב הבריאותי הגרוע ביותר שאת/ה יכול/ה לדמיין"
+      }
+    ]
+  }
+]
