@@ -21,7 +21,7 @@ module.exports.findMostRecent = function(docs, start, end){
         });
         realStart = (new Date(oldest.ValidTime)).setHours(0,0,0,0);
     }
-    var realEnd = (new Date(end)).setHours(24, 0, 0, 0);
+    var realEnd = (new Date(end)).setHours(23, 59, 0, 0);
     for(var temp = realStart; temp <= realEnd; temp += (24 * 3600 * 1000)){
         var docsPerDay = [];
         docs.forEach(function(doc){
