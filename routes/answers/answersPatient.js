@@ -37,7 +37,7 @@ var getScore = async function (QuestionnaireID, Answers) {
             score = await searchForScore(results, answersString);
             break;
         case 6:
-            score = Answers;
+            score = Answers[0].AnswerID[0];
             break;
     }
     return score;
