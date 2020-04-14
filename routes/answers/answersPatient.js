@@ -10,27 +10,27 @@ var getScore = async function (QuestionnaireID, Answers) {
     var score=0;
     switch(QuestionnaireID){
         case 1:
-            Answers.forEach(function(answer){
+            await Answers.forEach(function(answer){
                 if(answer.AnswerID.length>0)
                     score = score + answer.AnswerID[0];
             });
             score = score*2;
             break;
         case 2:
-            Answers.forEach(function(answer){
+            await Answers.forEach(function(answer){
                 if(answer.AnswerID.length>0)
                     score = score + answer.AnswerID[0];
             });
             break;
         case 3:
-            Answers.forEach(function(answer){
+            await Answers.forEach(function(answer){
                 if(answer.AnswerID.length>0)
                     score = score + answer.AnswerID[0];
             });
             break;
         case 5:
             var answersString = "";
-            Answers.forEach(function(answer){
+            await Answers.forEach(function(answer){
                 answersString = answersString + (answer.AnswerID[0]).toString();
             });
             var results = await csv().fromFile('eq5dCalc.csv');
