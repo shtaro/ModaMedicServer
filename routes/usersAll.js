@@ -23,7 +23,10 @@ router.get('/getUserQuestionnaire', function(req, res, next) {
 router.get('/getDateOfSurgery', function(req, res, next) {
   let userid = req.query.UserID;
   User.getUserByUserID(userid, function (err, user) {
-    common(res, err, err, user.DateOfSurgery);
+    if(err)
+      common(res, err, err.message, null);
+    else
+      common(res, false, null, user.DateOfSurgery);
   });
 });
 
