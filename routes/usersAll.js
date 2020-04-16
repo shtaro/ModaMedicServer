@@ -25,8 +25,12 @@ router.get('/getDateOfSurgery', function(req, res, next) {
   User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, err, err.message, null);
-    else
-      common(res, false, null, user.DateOfSurgery);
+    else {
+      if(user)
+        common(res, false, null, user.DateOfSurgery);
+      else
+        common(res, false, "Not Found", null);
+    }
   });
 });
 
