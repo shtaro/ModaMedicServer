@@ -4,24 +4,25 @@ var User = require('../modules/User');
 var common = require('./common');
 var jwt = require('jsonwebtoken');
 var tempToken = "password";
+var service = require('../service');
 
-
-router.post('/getUser', function(req, res, next) {
-  let userid = req.body.UserID;
-  User.getUserByUserID(userid, function (err, user) {
-    common(res, err, err, user);
-  });
-});
 
 router.get('/getUserQuestionnaire', function(req, res, next) {
   let userid = req.UserID;
   User.getUserByUserID(userid, function (err, user) {
-    common(res, err, err, user.Questionnaires);
+    if(err)
+      common(res, true, err, null);
+    else{
+      if(user)
+        common(res, false, null, user.Questionnaires);
+      else
+        common(res, false, "Not Found", null);
+    }
   });
 });
 
 router.get('/getDateOfSurgery', function(req, res, next) {
-  let userid = req.query.UserID;
+  let userid = service.hashElement(req.query.UserID);
   User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, err, err.message, null);

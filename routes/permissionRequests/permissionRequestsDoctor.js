@@ -2,13 +2,14 @@ var express = require('express');
 var router = express.Router();
 var common = require('../common');
 var PermissionRequest = require('../../modules/PermissionRequest');
+var service = require('../../service');
 
 router.post('/requestPermission', async function(req, res){
-    let request = await PermissionRequest.findOne({DoctorID: req.UserID, PatientID: req.body.PatientID}).lean().exec();
+    let request = await PermissionRequest.findOne({DoctorID: req.UserID, PatientID: service.hashElement(req.body.PatientID)}).lean().exec();
     if(!request) {
         let newRequest = new PermissionRequest({
             DoctorID: req.UserID,
-            PatientID: req.body.PatientID,
+            PatientID: service.hashElement(req.body.PatientID),
             Status: "New"
         });
         newRequest.save(function (error) {

@@ -27,9 +27,9 @@ var findUsers = async function(firstName, lastName, doctorID){
     for(const user of leanDoc){
         var permission = await Permission.findOne({DoctorID: doctorID, PatientID: user.UserID}).lean().exec();
         if(permission)
-            usersID.push({UserID: user.UserID, Permission: "yes"});
+            usersID.push({UserID: user.UserID, BirthDate: user.BirthDate, Permission: "yes"});
         else
-            usersID.push({UserID: user.UserID, Permission: "no"});
+            usersID.push({UserID: user.UserID, BirthDate: user.BirthDate, Permission: "no"});
     }
     return usersID;
 };
@@ -55,12 +55,12 @@ router.get('/getSteps', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -89,12 +89,12 @@ router.get('/getDistance', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -123,12 +123,12 @@ router.get('/getCalories', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -157,12 +157,12 @@ router.get('/getSleep', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -191,12 +191,12 @@ router.get('/getAccelerometer', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -225,12 +225,12 @@ router.get('/getWeather', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
@@ -259,12 +259,12 @@ router.get('/getActivity', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.UserID, docs: onePerDay});
+                    ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.UserID, docs: docs});
+                    ans.push({UserID: user.BirthDate, docs: docs});
             }
             else
-                ans.push({UserID: user.UserID, docs: "No Permission"});
+                ans.push({UserID: user.BirthDate, docs: "No Permission"});
         }
         common(res, null, null, ans);
     }
