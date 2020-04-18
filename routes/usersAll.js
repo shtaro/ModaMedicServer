@@ -7,8 +7,12 @@ var tempToken = "password";
 var service = require('../service');
 
 
-router.get('/getUserQuestionnaire', function(req, res, next) {
-  let userid = req.UserID;
+router.get('/getUserQuestionnaire', function(req, res) {
+  var userid = "";
+  if(req.Type.includes("patient"))
+    userid = req.UserID;
+  else
+    userid = service.hashElement(req.query.UserID);
   User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, true, err, null);
@@ -21,9 +25,49 @@ router.get('/getUserQuestionnaire', function(req, res, next) {
   });
 });
 
-router.get('/getDateOfSurgery', function(req, res, next) {
-  let userid = service.hashElement(req.query.UserID);
+router.post('/changeUserQuestionnaire', function(req, res) {
+  var userid = "";
+  if(req.Type.includes("patient"))
+    userid = req.UserID;
+  else
+    userid = service.hashElement(req.body.UserID);
+  User.updateOne({UserID: userid}, {Questionnaires: req.body.Questionnaires}, function (err, user) {
+    if(err)
+      common(res, err, err.message, null);
+    else {
+      if(user)
+        common(res, false, null, user.Questionnaires);
+      else
+        common(res, false, "Not Found", null);
+    }
+  });
+});
+
+router.get('/getDateOfSurgery', function(req, res) {
+  var userid = "";
+  if(req.Type.includes("patient"))
+    userid = req.UserID;
+  else
+    userid = service.hashElement(req.query.UserID);
   User.getUserByUserID(userid, function (err, user) {
+    if(err)
+      common(res, err, err.message, null);
+    else {
+      if(user)
+        common(res, false, null, user.DateOfSurgery);
+      else
+        common(res, false, "Not Found", null);
+    }
+  });
+});
+
+router.post('/changeDateOfSurgery', function(req, res) {
+  var userid = "";
+  if(req.Type.includes("patient"))
+    userid = req.UserID;
+  else
+    userid = service.hashElement(req.body.UserID);
+  User.updateOne({UserID: userid}, {DateOfSurgery: req.body.DateOfSurgery}, function (err, user) {
     if(err)
       common(res, err, err.message, null);
     else {

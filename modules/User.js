@@ -61,6 +61,7 @@ module.exports.privateCheck = function(req, res, next) {
         const decoded = jwt.verify(token, secret);
         var userId = decoded.UserID;
         req.UserID = userId;
+        req.Type = decoded.Type;
         req.decoded = decoded;
         console.log("checked");
         next(); //move on to the actual function
