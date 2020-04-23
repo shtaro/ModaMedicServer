@@ -34,7 +34,7 @@ router.get('/getVerificationQuestion', async function(req, res){
 
 
 router.post('/register', async function (req, res) {
-  if(req.body.Code=="12345") {
+  if(req.body.Code=="soroka372abc") {
     await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
       if (!user) {
         let daily = {QuestionnaireID: 0, QuestionnaireText: "יומי"};
@@ -79,7 +79,7 @@ router.post('/register', async function (req, res) {
       }
     });
   }
-  else if(req.body.Code=="54321"){
+  else if(req.body.Code=="soroka93xyz"){
     await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
       if (!user) {
         let newUser = new User({
