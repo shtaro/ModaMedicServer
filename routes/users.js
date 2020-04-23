@@ -33,30 +33,79 @@ router.get('/getVerificationQuestion', async function(req, res){
 });
 
 
-router.post('/register', async function (req, res, next) {
-  await User.getUserByUserID(req.body.UserID, function (err,user) {
-    if(!user){
-      let newUser = new User({
-        UserID: service.hashElement(req.body.UserID),
-        Password: service.hashElement(req.body.Password),
-        First_Name: req.body.First_Name,
-        Last_Name: req.body.Last_Name,
-        BirthDate: (new Date(req.body.BirthDate)).setHours(0,0,0,0),
-        Type: req.body.Type,
-        DateOfSurgery: req.body.DateOfSurgery,
-        Questionnaires: req.body.Questionnaires,
-        VerificationQuestion: req.body.VerificationQuestion,
-        VerificationAnswer: req.body.VerificationAnswer
-      });
-      User.createUser(newUser, function (error, user) {
-        common(res, error, error, newUser);
-      });
-    }
-    else {
-      var error = { 'message': 'User already exists' };
-      common(res, error, error, null);
-    }
-  });
+router.post('/register', async function (req, res) {
+  if(req.body.Code=="12345") {
+    await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
+      if (!user) {
+        let daily = {QuestionnaireID: 0, QuestionnaireText: "יומי"};
+        let questionnairesArr = [daily];
+        let Questionnaires = req.body.Questionnaires;
+        if(Questionnaires.length>0){
+          for(const q of Questionnaires){
+            questionnairesArr.push(q);
+          }
+        }
+        let newUser = new User({
+          UserID: service.hashElement(req.body.UserID),
+          Password: service.hashElement(req.body.Password),
+          First_Name: req.body.First_Name,
+          Last_Name: req.body.Last_Name,
+          Phone_Number: req.body.Phone_Number,
+          Gender: req.body.Gender,
+          Smoke: req.body.Smoke,
+          SurgeryType: req.body.SurgeryType,
+          Education: req.body.Education,
+          Height: req.body.Height,
+          Weight: req.body.Weight,
+          BirthDate: (new Date(req.body.BirthDate)).setHours(0, 0, 0, 0),
+          Type: ["patient"],
+          DateOfSurgery: req.body.DateOfSurgery,
+          Questionnaires: questionnairesArr,
+          VerificationQuestion: req.body.VerificationQuestion,
+          VerificationAnswer: req.body.VerificationAnswer
+        });
+        User.createUser(newUser, function (error, user) {
+          if(error)
+            common(res, error, error, null);
+          else
+            common(res,false,null,newUser);
+        });
+      } else {
+        var error = {'message': 'Taken Email'};
+        common(res, error, error, null);
+      }
+    });
+  }
+  if(req.body.Code=="54321"){
+    await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
+      if (!user) {
+        let newUser = new User({
+          UserID: service.hashElement(req.body.UserID),
+          Password: service.hashElement(req.body.Password),
+          First_Name: req.body.First_Name,
+          Last_Name: req.body.Last_Name,
+          Phone_Number: req.body.Phone_Number,
+          BirthDate: (new Date(req.body.BirthDate)).setHours(0, 0, 0, 0),
+          Type: ["doctor"],
+          VerificationQuestion: req.body.VerificationQuestion,
+          VerificationAnswer: req.body.VerificationAnswer
+        });
+        User.createUser(newUser, function (error, user) {
+          if(error)
+            common(res, error, error, null);
+          else
+            common(res,false,null,newUser);
+        });
+      } else {
+        var error = {'message': 'Taken Email'};
+        common(res, error, error, null);
+      }
+    });
+  }
+  else{
+    var error = {'message': 'Wrong Code'};
+    common(res, error, error, null);
+  }
 });
 
 router.post('/login', async function(req, res, next) {
