@@ -79,7 +79,7 @@ router.post('/register', async function (req, res) {
       }
     });
   }
-  if(req.body.Code=="54321"){
+  else if(req.body.Code=="54321"){
     await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
       if (!user) {
         let newUser = new User({
