@@ -14,6 +14,14 @@ var UserSchema = new Schema({
     Password: String,
     First_Name: String,
     Last_Name: String,
+    Phone_Number: String,
+    Gender: String,
+    Smoke: String,
+    SurgeryType: String,
+    Education: String,
+    Height: Number,
+    Weight: Number,
+    BMI: String,
     BirthDate: Number,
     Type: [String],
     DateOfSurgery: Number,
@@ -24,8 +32,9 @@ var UserSchema = new Schema({
         QuestionnaireID: Number,
         QuestionnaireText: String
         }
-    ]
-
+    ],
+    ValidTime: Number,
+    Timestamp: Number
 });
 
 //create models

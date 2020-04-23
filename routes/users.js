@@ -57,12 +57,15 @@ router.post('/register', async function (req, res) {
           Education: req.body.Education,
           Height: req.body.Height,
           Weight: req.body.Weight,
+          BMI: req.body.BMI,
           BirthDate: (new Date(req.body.BirthDate)).setHours(0, 0, 0, 0),
           Type: ["patient"],
           DateOfSurgery: req.body.DateOfSurgery,
           Questionnaires: questionnairesArr,
           VerificationQuestion: req.body.VerificationQuestion,
-          VerificationAnswer: req.body.VerificationAnswer
+          VerificationAnswer: req.body.VerificationAnswer,
+          ValidTime: req.body.ValidTime,
+          Timestamp: new Date().getTime()
         });
         User.createUser(newUser, function (error, user) {
           if(error)
@@ -88,7 +91,9 @@ router.post('/register', async function (req, res) {
           BirthDate: (new Date(req.body.BirthDate)).setHours(0, 0, 0, 0),
           Type: ["doctor"],
           VerificationQuestion: req.body.VerificationQuestion,
-          VerificationAnswer: req.body.VerificationAnswer
+          VerificationAnswer: req.body.VerificationAnswer,
+          ValidTime: req.body.ValidTime,
+          Timestamp: new Date().getTime()
         });
         User.createUser(newUser, function (error, user) {
           if(error)
