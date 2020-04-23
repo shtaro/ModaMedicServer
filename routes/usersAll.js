@@ -12,7 +12,7 @@ router.get('/getUserQuestionnaire', function(req, res) {
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
-    userid = service.hashElement(req.query.UserID);
+    userid = req.query.UserID;
   User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, true, err, null);
@@ -30,7 +30,7 @@ router.post('/changeUserQuestionnaire', function(req, res) {
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
-    userid = service.hashElement(req.body.UserID);
+    userid = req.body.UserID;
   User.updateOne({UserID: userid}, {Questionnaires: req.body.Questionnaires}, function (err, user) {
     if(err)
       common(res, err, err.message, null);
@@ -48,7 +48,7 @@ router.get('/getDateOfSurgery', function(req, res) {
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
-    userid = service.hashElement(req.query.UserID);
+    userid = req.query.UserID;
   User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, err, err.message, null);
@@ -66,7 +66,7 @@ router.post('/changeDateOfSurgery', function(req, res) {
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
-    userid = service.hashElement(req.body.UserID);
+    userid = req.body.UserID;
   User.updateOne({UserID: userid}, {DateOfSurgery: req.body.DateOfSurgery}, function (err, user) {
     if(err)
       common(res, err, err.message, null);
