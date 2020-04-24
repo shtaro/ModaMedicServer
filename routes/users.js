@@ -33,7 +33,7 @@ router.get('/getVerificationQuestion', async function(req, res){
 });
 
 
-router.post('/register', async function (req, res) {
+router.post('/patientRegister', async function (req, res) {
   if(req.body.Code=="soroka372abc") {
     await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
       if (!user) {
@@ -79,7 +79,14 @@ router.post('/register', async function (req, res) {
       }
     });
   }
-  else if(req.body.Code=="soroka93xyz"){
+  else{
+    var error = {'message': 'Wrong Code'};
+    common(res, error, error, null);
+  }
+});
+
+router.post('/doctorRegister', async function(req, res){
+  if(req.body.Code=="soroka93xyz"){
     await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
       if (!user) {
         let newUser = new User({
@@ -113,7 +120,7 @@ router.post('/register', async function (req, res) {
   }
 });
 
-router.post('/login', async function(req, res, next) {
+router.post('/login', async function(req, res) {
   await User.getUserByUserID(service.hashElement(req.body.UserID), function (err,user) {
     if(user){
       if(user.Password === service.hashElement(req.body.Password)){
