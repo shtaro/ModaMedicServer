@@ -69,18 +69,20 @@ module.exports.privateCheck = function(req, res, next) {
         var error = {'message': 'Access denied. No token provided.'};
         common(res, error, error, null);
     }
-    // verify token
-    try {
-        const decoded = jwt.verify(token, secret);
-        var userId = decoded.UserID;
-        req.UserID = userId;
-        req.Type = decoded.Type;
-        req.decoded = decoded;
-        console.log("checked");
-        next(); //move on to the actual function
-    } catch (exception) {
-        var error = {'message': 'Invalid Token'};
-        common(res, error, error, null);
+    else {
+        // verify token
+        try {
+            const decoded = jwt.verify(token, secret);
+            var userId = decoded.UserID;
+            req.UserID = userId;
+            req.Type = decoded.Type;
+            req.decoded = decoded;
+            console.log("checked");
+            next(); //move on to the actual function
+        } catch (exception) {
+            var error = {'message': 'Invalid Token'};
+            common(res, error, error, null);
+        }
     }
 };
 
@@ -152,17 +154,19 @@ module.exports.passwordCheck = function(req, res, next) {
         var error = {'message': 'Access denied. No token provided.'};
         common(res, error, error, null);
     }
-    // verify token
-    try {
-        const decoded = jwt.verify(token, tempToken);
-        var userId = decoded.UserID;
-        req.UserID = userId;
-        req.decoded = decoded;
-        console.log("checked");
-        next(); //move on to the actual function
-    } catch (exception) {
-        var error = {'message': 'Invalid Token'};
-        common(res, error, error, null);
+    else {
+        // verify token
+        try {
+            const decoded = jwt.verify(token, tempToken);
+            var userId = decoded.UserID;
+            req.UserID = userId;
+            req.decoded = decoded;
+            console.log("checked");
+            next(); //move on to the actual function
+        } catch (exception) {
+            var error = {'message': 'Invalid Token'};
+            common(res, error, error, null);
+        }
     }
 };
 
