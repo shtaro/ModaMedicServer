@@ -1,6 +1,7 @@
 var mongoose = require('mongoose');
 var service = require('../service.js');
 var jwt = require('jsonwebtoken');
+var common = require('../routes/common');
 
 //Define a schema
 var Schema = mongoose.Schema;
