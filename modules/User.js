@@ -64,7 +64,10 @@ module.exports.privateCheck = function(req, res, next) {
     console.log("private check");
     const token = req.header("x-auth-token");
     // no token
-    if (!token) res.status(401).send("Access denied. No token provided.");
+    if (!token) {
+        var error = {'message': 'Access denied. No token provided.'};
+        common(res, error, error, null);
+    }
     // verify token
     try {
         const decoded = jwt.verify(token, secret);
@@ -75,7 +78,8 @@ module.exports.privateCheck = function(req, res, next) {
         console.log("checked");
         next(); //move on to the actual function
     } catch (exception) {
-        res.status(400).send("Invalid token.");
+        var error = {'message': 'Invalid Token'};
+        common(res, error, error, null);
     }
 };
 
@@ -90,10 +94,12 @@ module.exports.patientCheck = function(req, res, next){
             next(); //move on to the actual function
         }
         else{
-            res.status(400).send("permission denied, required patient");
+            var error = {'message': 'permission denied, required patient'};
+            common(res, error, error, null);
         }
     } catch (exception) {
-        res.status(400).send("Invalid token.");
+        var error = {'message': 'Invalid Token'};
+        common(res, error, error, null);
     }
 };
 
@@ -108,10 +114,12 @@ module.exports.doctorCheck = function(req, res, next){
             next(); //move on to the actual function
         }
         else{
-            res.status(400).send("permission denied, required doctor");
+            var error = {'message': 'permission denied, required patient'};
+            common(res, error, error, null);
         }
     } catch (exception) {
-        res.status(400).send("Invalid token.");
+        var error = {'message': 'Invalid Token'};
+        common(res, error, error, null);
     }
 };
 
@@ -126,10 +134,12 @@ module.exports.adminCheck = function(req, res, next){
             next(); //move on to the actual function
         }
         else{
-            res.status(400).send("permission denied, required admin");
+            var error = {'message': 'permission denied, required patient'};
+            common(res, error, error, null);
         }
     } catch (exception) {
-        res.status(400).send("Invalid token.");
+        var error = {'message': 'Invalid Token'};
+        common(res, error, error, null);
     }
 };
 
@@ -137,7 +147,10 @@ module.exports.passwordCheck = function(req, res, next) {
     console.log("password check");
     const token = req.header("x-auth-token");
     // no token
-    if (!token) res.status(401).send("Access denied. No token provided.");
+    if (!token){
+        var error = {'message': 'Access denied. No token provided.'};
+        common(res, error, error, null);
+    }
     // verify token
     try {
         const decoded = jwt.verify(token, tempToken);
@@ -147,7 +160,8 @@ module.exports.passwordCheck = function(req, res, next) {
         console.log("checked");
         next(); //move on to the actual function
     } catch (exception) {
-        res.status(400).send("Invalid token.");
+        var error = {'message': 'Invalid Token'};
+        common(res, error, error, null);
     }
 };
 
