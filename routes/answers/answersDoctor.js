@@ -18,11 +18,14 @@ var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];
     const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean().exec();
     for(const user of leanDoc){
+        /**
         var permission = await Permission.findOne({DoctorID: doctorID, PatientID: user.UserID}).lean().exec();
         if(permission)
             usersID.push({UserID: user.UserID, BirthDate: user.BirthDate, Permission: "yes"});
         else
             usersID.push({UserID: user.UserID, BirthDate: user.BirthDate, Permission: "no"});
+         **/
+        usersID.push({UserID: user.UserID, BirthDate: user.BirthDate});
     }
     return usersID;
 };
@@ -40,7 +43,7 @@ router.get('/getDailyAnswers', async function (req, res, next) {
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            if(user.Permission==="yes") {
+            //if(user.Permission==="yes") {
                 var docs = await DailyAnswer.find({
                     UserID: user.UserID,
                     QuestionnaireID: 0,
@@ -51,9 +54,11 @@ router.get('/getDailyAnswers', async function (req, res, next) {
                     ans.push({UserID: user.BirthDate, docs: onePerDay});
                 } else
                     ans.push({UserID: user.BirthDate, docs: docs});
+            /**
             }
             else
                 ans.push({UserID: user.BirthDate, docs: "No Permission"});
+             **/
         }
         common(res, null, null, ans);
     }
@@ -74,7 +79,7 @@ router.get('/getPeriodicAnswers', async function (req, res, next) {
     if(usersID.length>0) {
         var ans = [];
         for (const user of usersID) {
-            if(user.Permission==="yes") {
+            //if(user.Permission==="yes") {
                 var questionnaires = [];
                 let userObj = await User.findOne({UserID: user.UserID}).lean().exec();
                 questionnaires = userObj.Questionnaires;
@@ -95,9 +100,11 @@ router.get('/getPeriodicAnswers', async function (req, res, next) {
                         }
                     }
                 }
+            /**
             }
             else
                 ans.push({UserID: user.BirthDate, docs: "No Permission"});
+             **/
         }
         common(res, null, null, ans);
     }
