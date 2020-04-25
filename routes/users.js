@@ -184,15 +184,20 @@ router.use('/passwordChangeCheck', function (req, res, next) {
 
 router.post('/passwordChangeCheck/changePassword', async function (req, res) {
   await User.getUserByUserID(req.UserID, function (err, user) {
-    if (err) throw err;
-    User.changePassword(user, req.body.NewPassword, function (err) {
-      if (err) {
-        error = {'message': 'Error has occured. Please try again.'};
-        common(res, error, 'Error has occured. Please try again.', null);
-      } else {
-        common(res, false, "Password Changed", null);
-      }
-    })
+    if (err) {
+      var error = {'message': 'Error has occurred. Please try again.'};
+      common(res, error, 'Error has occurred. Please try again.', null);
+    }
+    else {
+      User.changePassword(user, req.body.NewPassword, function (err) {
+        if (err) {
+          var error = {'message': 'Error has occurred. Please try again.'};
+          common(res, error, 'Error has occurred. Please try again.', null);
+        } else {
+          common(res, false, "Password Changed", null);
+        }
+      });
+    }
   });
 });
 
