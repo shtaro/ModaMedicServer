@@ -31,7 +31,15 @@ router.post('/changeUserQuestionnaire', function(req, res) {
     userid = req.UserID;
   else
     userid = req.body.UserID;
-  User.updateOne({UserID: userid}, {Questionnaires: req.body.Questionnaires}, function (err, user) {
+  let daily = {QuestionnaireID: 0, QuestionnaireText: "יומי"};
+  let questionnairesArr = [daily];
+  let Questionnaires = req.body.Questionnaires;
+  if(Questionnaires.length>0){
+    for(const q of Questionnaires){
+      questionnairesArr.push(q);
+    }
+  }
+  User.updateOne({UserID: userid}, {Questionnaires: questionnairesArr}, function (err, user) {
     if(err)
       common(res, err, err.message, null);
     else {
