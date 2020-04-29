@@ -4,8 +4,8 @@ var common = require('./common');
 var Questionnaire = require('../modules/Questionnaire');
 
 
-router.get('/getQuestionnaire/:QuestionnaireID', function (req, res, next) {
-    Questionnaire.getQuestionnaire(req.params.QuestionnaireID,function (err, questionnaire) {
+router.get('/getQuestionnaire/:QuestionnaireID', async function (req, res) {
+    await Questionnaire.getQuestionnaire(req.params.QuestionnaireID,function (err, questionnaire) {
         if(err)
             common(res, true, err, null);
         else
@@ -20,7 +20,7 @@ router.get('/all', async function (req, res) {
                 common(res, true, err, null);
             else {
                 let data = [];
-                questionnaires.forEach(function (q) {
+                await questionnaires.forEach(function (q) {
                     var obj = {QuestionnaireID: q.QuestionnaireID, QuestionnaireText: q.QuestionnaireText};
                     data.push(obj);
                 });

@@ -16,86 +16,86 @@ var getDate = function (timestamp) {
     return date_string;
 };
 
-router.post('/steps', function (req, res, next) {
+router.post('/steps', async function (req, res, next) {
     let newMetric = new StepsMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
 
-router.post('/distance', function (req, res, next) {
+router.post('/distance', async function (req, res, next) {
     let newMetric = new DistanceMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
 
-router.post('/calories', function (req, res, next) {
+router.post('/calories', async function (req, res, next) {
     let newMetric = new CaloriesMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
 
-router.post('/sleep', function (req, res, next) {
+router.post('/sleep', async function (req, res, next) {
     let newMetric = new SleepMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
 
-router.post('/accelerometer', function (req, res, next) {
+router.post('/accelerometer', async function (req, res, next) {
     let newMetric = new AccelerometerMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
 
-router.post('/weather', function (req, res, next) {
+router.post('/weather', async function (req, res, next) {
     let newMetric = new WeatherMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
 
-router.post('/activity', function (req, res, next) {
+router.post('/activity', async function (req, res, next) {
     let newMetric = new ActivityMetric({
         UserID: req.UserID,
         Timestamp: (new Date).getTime(),
         ValidTime: req.body.ValidTime,
         Data: req.body.Data
     });
-    newMetric.save(function (error) {
+    await newMetric.save(function (error) {
         common(res, error, error, newMetric);
     });
 });
@@ -131,7 +131,7 @@ router.get('/getMissingDates', async function (req, res, next){
     docs = await getRecordsBetweenDates(userID, start, realNow, "Activity");
     dates = await findDates(start, realNow, docs);
     ans.push({Activity: dates});
-    common(res,null,null,ans);
+    common(res,null,null, ans);
 });
 
 var getRecordsBetweenDates = async function(userID, start, realNow, metric){

@@ -35,7 +35,7 @@ router.get('/getVerificationQuestion', async function(req, res){
 
 router.post('/patientRegister', async function (req, res) {
   if(req.body.Code=="soroka372abc") {
-    await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
+    await User.getUserByUserID(service.hashElement(req.body.UserID), async function (err, user) {
       if (!user) {
         let daily = {QuestionnaireID: 0, QuestionnaireText: "יומי"};
         let questionnairesArr = [daily];
@@ -67,7 +67,7 @@ router.post('/patientRegister', async function (req, res) {
           ValidTime: req.body.ValidTime,
           Timestamp: new Date().getTime()
         });
-        User.createUser(newUser, function (error, user) {
+        await User.createUser(newUser, function (error, user) {
           if(error)
             common(res, error, error, null);
           else
@@ -87,7 +87,7 @@ router.post('/patientRegister', async function (req, res) {
 
 router.post('/doctorRegister', async function(req, res){
   if(req.body.Code=="soroka93xyz"){
-    await User.getUserByUserID(service.hashElement(req.body.UserID), function (err, user) {
+    await User.getUserByUserID(service.hashElement(req.body.UserID), async function (err, user) {
       if (!user) {
         let newUser = new User({
           UserID: service.hashElement(req.body.UserID),
@@ -102,7 +102,7 @@ router.post('/doctorRegister', async function(req, res){
           ValidTime: req.body.ValidTime,
           Timestamp: new Date().getTime()
         });
-        User.createUser(newUser, function (error, user) {
+        await User.createUser(newUser, function (error, user) {
           if(error)
             common(res, error, error, null);
           else
@@ -183,13 +183,13 @@ router.use('/passwordChangeCheck', function (req, res, next) {
 });
 
 router.post('/passwordChangeCheck/changePassword', async function (req, res) {
-  await User.getUserByUserID(req.UserID, function (err, user) {
+  await User.getUserByUserID(req.UserID, async function (err, user) {
     if (err) {
       var error = {'message': 'Error has occurred. Please try again.'};
       common(res, error, 'Error has occurred. Please try again.', null);
     }
     else {
-      User.changePassword(user, req.body.NewPassword, function (err) {
+      await User.changePassword(user, req.body.NewPassword, function (err) {
         if (err) {
           var error = {'message': 'Error has occurred. Please try again.'};
           common(res, error, 'Error has occurred. Please try again.', null);

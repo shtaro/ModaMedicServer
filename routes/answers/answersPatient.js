@@ -81,7 +81,7 @@ router.post('/sendAnswers', async function (req, res, next) {
             Score: score
         });
     }
-    newAnswer.save(function (error) {
+    await newAnswer.save(function (error) {
         common(res, error, error, newAnswer);
     });
 });

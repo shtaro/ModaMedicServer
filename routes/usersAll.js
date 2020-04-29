@@ -7,13 +7,13 @@ var tempToken = "password";
 var service = require('../service');
 
 
-router.get('/getUserQuestionnaire', function(req, res) {
+router.get('/getUserQuestionnaire', async function(req, res) {
   var userid = "";
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
     userid = req.query.UserID;
-  User.getUserByUserID(userid, function (err, user) {
+  await User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, true, err, null);
     else{
@@ -25,7 +25,7 @@ router.get('/getUserQuestionnaire', function(req, res) {
   });
 });
 
-router.post('/changeUserQuestionnaire', function(req, res) {
+router.post('/changeUserQuestionnaire', async function(req, res) {
   var userid = "";
   if(req.Type.includes("patient"))
     userid = req.UserID;
@@ -39,7 +39,7 @@ router.post('/changeUserQuestionnaire', function(req, res) {
       questionnairesArr.push(q);
     }
   }
-  User.updateOne({UserID: userid}, {Questionnaires: questionnairesArr}, function (err, user) {
+  await User.updateOne({UserID: userid}, {Questionnaires: questionnairesArr}, function (err, user) {
     if(err)
       common(res, err, err.message, null);
     else {
@@ -51,13 +51,13 @@ router.post('/changeUserQuestionnaire', function(req, res) {
   });
 });
 
-router.get('/getDateOfSurgery', function(req, res) {
+router.get('/getDateOfSurgery', async function(req, res) {
   var userid = "";
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
     userid = req.query.UserID;
-  User.getUserByUserID(userid, function (err, user) {
+  await User.getUserByUserID(userid, function (err, user) {
     if(err)
       common(res, err, err.message, null);
     else {
@@ -69,13 +69,13 @@ router.get('/getDateOfSurgery', function(req, res) {
   });
 });
 
-router.post('/changeDateOfSurgery', function(req, res) {
+router.post('/changeDateOfSurgery', async function(req, res) {
   var userid = "";
   if(req.Type.includes("patient"))
     userid = req.UserID;
   else
     userid = req.body.UserID;
-  User.updateOne({UserID: userid}, {DateOfSurgery: req.body.DateOfSurgery}, function (err, user) {
+  await User.updateOne({UserID: userid}, {DateOfSurgery: req.body.DateOfSurgery}, function (err, user) {
     if(err)
       common(res, err, err.message, null);
     else {

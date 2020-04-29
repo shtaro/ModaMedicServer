@@ -12,7 +12,7 @@ router.post('/requestPermission', async function(req, res){
             PatientID: service.hashElement(req.body.PatientID),
             Status: "New"
         });
-        newRequest.save(function (error) {
+        await newRequest.save(function (error) {
             common(res, error, error, newRequest);
         });
     }
