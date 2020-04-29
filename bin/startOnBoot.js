@@ -13,9 +13,11 @@ svc.on('install',function(){
     svc.start();
 });
 
-svc.install();
-//svc.uninstall(); //change to this when want to REMOVE task and run locally
-
 svc.on('uninstall',function () {
     svc.stop();
 });
+
+svc.install();
+//svc.uninstall(); //change to this when want to REMOVE task and run locally
+
+
