@@ -4,7 +4,7 @@ var Service = require('node-windows').Service;
 var svc = new Service({
     name:'ModaMedicServer',
     description: 'server',
-    script: 'C:\\Users\\maore\\WebstormProjects\\ModaMedicServerNEW\\bin\\www'
+    script: 'C:\\Users\\User\\WebstormProjects\\ModaMedicServer\\bin\\www'
 });
 
 // Listen for the "install" event, which indicates the
