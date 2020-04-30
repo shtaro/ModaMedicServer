@@ -25,7 +25,7 @@ var findUsers = async function(firstName, lastName, doctorID){
         else
             usersID.push({UserID: user.UserID, BirthDate: user.BirthDate, Permission: "no"});
          **/
-        usersID.push({UserID: user.UserID, BirthDate: user.BirthDate});
+        usersID.push(user);
     }
     return usersID;
 };
@@ -51,9 +51,9 @@ router.get('/getDailyAnswers', async function (req, res, next) {
                 }).lean().exec();
                 if (docs.length > 0) {
                     var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
-                    ans.push({UserID: user.BirthDate, docs: onePerDay});
+                    ans.push({UserID: user, docs: onePerDay});
                 } else
-                    ans.push({UserID: user.BirthDate, docs: docs});
+                    ans.push({UserID: user, docs: docs});
             /**
             }
             else
@@ -93,10 +93,10 @@ router.get('/getPeriodicAnswers', async function (req, res, next) {
                         if (docs.length > 0) {
                             var onePerDay = await service.findMostRecent(docs, req.query.start_time, req.query.end_time);
                             let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: onePerDay};
-                            ans.push({UserID: user.BirthDate, docs: docs2});
+                            ans.push({UserID: user, docs: docs2});
                         } else {
                             let docs2 = {QuestionnaireID: quest.QuestionnaireID, data: docs};
-                            ans.push({UserID: user.BirthDate, docs: docs2});
+                            ans.push({UserID: user, docs: docs2});
                         }
                     }
                 }
