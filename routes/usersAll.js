@@ -26,11 +26,6 @@ router.get('/getUserQuestionnaire', async function(req, res) {
 });
 
 router.post('/changeUserQuestionnaire', async function(req, res) {
-  var userid = "";
-  if(req.Type.includes("patient"))
-    userid = req.UserID;
-  else
-    userid = req.body.UserID;
   let daily = {QuestionnaireID: 0, QuestionnaireText: "יומי"};
   let questionnairesArr = [daily];
   let Questionnaires = req.body.Questionnaires;
@@ -39,6 +34,16 @@ router.post('/changeUserQuestionnaire', async function(req, res) {
       questionnairesArr.push(q);
     }
   }
+  var userid = "";
+  if(req.Type.includes("patient")){
+    userid = req.UserID;
+    let eq5 = {QuestionnaireID: 5, QuestionnaireText: "איכות חיים"};
+    let eq6 = {QuestionnaireID: 6, QuestionnaireText: "דירוג איכות חיים"};
+    questionnairesArr.push(eq5);
+    questionnairesArr.push(eq6);
+  }
+  else
+    userid = req.body.UserID;
   await User.updateOne({UserID: userid}, {Questionnaires: questionnairesArr}, function (err, user) {
     if(err)
       common(res, err, err.message, null);

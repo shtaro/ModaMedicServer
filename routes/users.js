@@ -39,6 +39,10 @@ router.post('/patientRegister', async function (req, res) {
       if (!user) {
         let daily = {QuestionnaireID: 0, QuestionnaireText: "יומי"};
         let questionnairesArr = [daily];
+        let eq5 = {QuestionnaireID: 5, QuestionnaireText: "איכות חיים"};
+        let eq6 = {QuestionnaireID: 6, QuestionnaireText: "דירוג איכות חיים"};
+        questionnairesArr.push(eq5);
+        questionnairesArr.push(eq6);
         let Questionnaires = req.body.Questionnaires;
         if(Questionnaires.length>0){
           for await (const q of Questionnaires){
