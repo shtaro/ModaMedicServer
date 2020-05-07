@@ -83,7 +83,7 @@
       },
       {
         "QuestionID" : 3,
-        "QuestionText":"כאב / אי נוחות",
+        "QuestionText":"כאב / אי-נוחות",
         "Type":"Single",
         "Answers" :
         [
