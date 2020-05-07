@@ -43,8 +43,8 @@ var getScore = async function (QuestionnaireID, Answers) {
     return score;
 };
 
-var searchForScore = function(results, answersString){
-    for(const row of results){
+var searchForScore = async function(results, answersString){
+    for await (const row of results){
         if(row.answers == answersString){
             return row.spain;
         }

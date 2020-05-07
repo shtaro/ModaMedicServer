@@ -35,7 +35,7 @@ router.post('/changeUserQuestionnaire', async function(req, res) {
   let questionnairesArr = [daily];
   let Questionnaires = req.body.Questionnaires;
   if(Questionnaires.length>0){
-    for(const q of Questionnaires){
+    for await (const q of Questionnaires){
       questionnairesArr.push(q);
     }
   }

@@ -24,7 +24,7 @@ var checkTimes = function(start, end){
 var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];
     const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean().exec();
-    for(const user of leanDoc){
+    for await (const user of leanDoc){
         /**
         var permission = await Permission.findOne({DoctorID: doctorID, PatientID: user.UserID}).lean().exec();
         if(permission)
@@ -50,7 +50,7 @@ router.get('/getSteps', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await StepsMetric.find({
                     UserID: user.UserID,
@@ -86,7 +86,7 @@ router.get('/getDistance', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await DistanceMetric.find({
                     UserID: user.UserID,
@@ -122,7 +122,7 @@ router.get('/getCalories', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await CaloriesMetric.find({
                     UserID: user.UserID,
@@ -158,7 +158,7 @@ router.get('/getSleep', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await SleepMetric.find({
                     UserID: user.UserID,
@@ -194,7 +194,7 @@ router.get('/getAccelerometer', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await AccelerometerMetric.find({
                     UserID: user.UserID,
@@ -230,7 +230,7 @@ router.get('/getWeather', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await WeatherMetric.find({
                     UserID: user.UserID,
@@ -266,7 +266,7 @@ router.get('/getActivity', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await ActivityMetric.find({
                     UserID: user.UserID,

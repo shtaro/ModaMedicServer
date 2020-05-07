@@ -41,7 +41,7 @@ router.post('/patientRegister', async function (req, res) {
         let questionnairesArr = [daily];
         let Questionnaires = req.body.Questionnaires;
         if(Questionnaires.length>0){
-          for(const q of Questionnaires){
+          for await (const q of Questionnaires){
             questionnairesArr.push(q);
           }
         }
@@ -289,7 +289,7 @@ router.get('/changeDB', async function (req, res) {
   });
   await Permission.find({}, async function(err, users){
     if(err) throw err;
-    for(const user of users){
+    for await (const user of users){
       await Permission.updateOne({DoctorID: user.DoctorID, PatientID:user.PatientID}, {DoctorID: service.hashElement(user.DoctorID), PatientID: service.hashElement(user.PatientID)}, function (err) {
         if(err) throw err;
       });

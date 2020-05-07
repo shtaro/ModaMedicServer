@@ -17,7 +17,7 @@ var getDate = function (timestamp) {
 var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];
     const leanDoc = await User.find({First_Name: firstName, Last_Name: lastName, Type:'patient'}).lean().exec();
-    for(const user of leanDoc){
+    for await (const user of leanDoc){
         /**
         var permission = await Permission.findOne({DoctorID: doctorID, PatientID: user.UserID}).lean().exec();
         if(permission)
@@ -42,7 +42,7 @@ router.get('/getDailyAnswers', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var docs = await DailyAnswer.find({
                     UserID: user.UserID,
@@ -78,12 +78,12 @@ router.get('/getPeriodicAnswers', async function (req, res, next) {
     var usersID = await findUsers(req.query.FirstName, req.query.LastName, req.UserID);
     if(usersID.length>0) {
         var ans = [];
-        for (const user of usersID) {
+        for await (const user of usersID) {
             //if(user.Permission==="yes") {
                 var questionnaires = [];
                 let userObj = await User.findOne({UserID: user.UserID}).lean().exec();
                 questionnaires = userObj.Questionnaires;
-                for(const quest of questionnaires){
+                for await (const quest of questionnaires){
                     if(quest.QuestionnaireID!=0) {
                         var docs = await PeriodicAnswer.find({
                             UserID: user.UserID,
