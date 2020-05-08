@@ -33,9 +33,14 @@ var getScore = async function (QuestionnaireID, Answers) {
             await Answers.forEach(function(answer){
                 answersString = answersString + (answer.AnswerID[0]).toString();
             });
-            var results = await csv().fromFile('eq5dCalc.csv');
-            score = await searchForScore(results, answersString);
-            break;
+            try {
+                var results = await csv().fromFile("C:\\Users\\User\\WebstormProjects\\ModaMedicServer\\eq5dCalc.csv");
+                score = await searchForScore(results, answersString);
+                break;
+            }
+            catch(exception){
+               return exception;
+            }
         case 6:
             score = Answers[0].AnswerID[0];
             break;
@@ -69,21 +74,29 @@ router.post('/sendAnswers', async function (req, res, next) {
             QuestionnaireID: req.body.QuestionnaireID,
             Answers: req.body.Answers
         });
-    }
-    else{
-        var score = await getScore(req.body.QuestionnaireID, req.body.Answers);
-        var newAnswer = new PeriodicAnswer({
-            UserID: req.UserID,
-            Timestamp: (new Date).getTime(),
-            ValidTime: req.body.ValidTime,
-            QuestionnaireID: req.body.QuestionnaireID,
-            Answers: req.body.Answers,
-            Score: score
+        await newAnswer.save(function (error) {
+            common(res, error, error, newAnswer);
         });
     }
-    await newAnswer.save(function (error) {
-        common(res, error, error, newAnswer);
-    });
+    else{
+        try {
+            var score = await getScore(req.body.QuestionnaireID, req.body.Answers);
+            var newAnswer = new PeriodicAnswer({
+                UserID: req.UserID,
+                Timestamp: (new Date).getTime(),
+                ValidTime: req.body.ValidTime,
+                QuestionnaireID: req.body.QuestionnaireID,
+                Answers: req.body.Answers,
+                Score: score
+            });
+            await newAnswer.save(function (error) {
+                common(res, error, error, newAnswer);
+            });
+        }
+        catch(exception){
+            common(res, exception, exception.message, null);
+        }
+    }
 });
 
 
