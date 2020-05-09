@@ -49,6 +49,10 @@ router.post('/changeUserQuestionnaire', async function(req, res) {
   let Questionnaires = req.body.Questionnaires;
   if(Questionnaires.length>0){
     for await (const q of Questionnaires){
+      if(q.QuestionnaireID==5){
+        let eq6 = {QuestionnaireID: 6, QuestionnaireText: "דירוג איכות חיים"};
+        questionnairesArr.push(eq6);
+      }
       questionnairesArr.push(q);
     }
   }
