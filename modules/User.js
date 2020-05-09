@@ -28,12 +28,15 @@ var UserSchema = new Schema({
     DateOfSurgery: Number,
     VerificationQuestion: Number,
     VerificationAnswer: String,
-    Questionnaires: [
-        {
-        QuestionnaireID: Number,
-        QuestionnaireText: String
-        }
-    ],
+    Questionnaires: {
+        type: [
+                {
+                    QuestionnaireID: Number,
+                    QuestionnaireText: String
+                }
+            ],
+        default: undefined
+    },
     ValidTime: Number,
     Timestamp: Number
 });
