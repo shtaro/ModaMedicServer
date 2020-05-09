@@ -6,6 +6,24 @@ var jwt = require('jsonwebtoken');
 var tempToken = "password";
 var service = require('../service');
 
+router.get('/getFirsts', async function(req, res) {
+  var allUsers = await User.find({Type: ["patient"]}).lean().exec();
+  var ans = [];
+  for await(const user of allUsers){
+    ans.push(user.First_Name);
+  }
+  common(res, null, null, ans);
+});
+
+router.get('/getLasts', async function(req, res) {
+  var allUsers = await User.find({Type: ["patient"]}).lean().exec();
+  var ans = [];
+  for await(const user of allUsers){
+    ans.push(user.Last_Name);
+  }
+  common(res, null, null, ans);
+});
+
 
 router.get('/getUserQuestionnaire', async function(req, res) {
   var userid = "";
