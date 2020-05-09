@@ -13,10 +13,8 @@ var usersAllRouter = require('./routes/usersAll');
 var questionnairesRouter = require('./routes/questionnaires');
 var metricsDoctorRouter = require('./routes/metrics/metricsDoctor');
 var metricsPatientRouter = require('./routes/metrics/metricsPatient');
-var metricsAdminRouter = require('./routes/metrics/metricsAdmin');
 var answersPatientRouter = require('./routes/answers/answersPatient');
 var answersDoctorRouter = require('./routes/answers/answersDoctor');
-var answersAdminRouter = require('./routes/answers/answersAdmin');
 var requestsDoctorRouter = require('./routes/permissionRequests/permissionRequestsDoctor');
 
 var app = express();
@@ -74,10 +72,8 @@ app.use('/auth/usersAll', usersAllRouter);
 app.use('/questionnaires', questionnairesRouter);
 app.use('/auth/patients/metrics', metricsPatientRouter);
 app.use('/auth/doctors/metrics', metricsDoctorRouter);
-app.use('/auth/admins/metrics', metricsAdminRouter);
 app.use('/auth/patients/answers', answersPatientRouter);
 app.use('/auth/doctors/answers', answersDoctorRouter);
-app.use('/auth/admins/answers', answersAdminRouter);
 app.use('/auth/doctors/permissionRequests', requestsDoctorRouter);
 
 
