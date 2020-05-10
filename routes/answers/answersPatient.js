@@ -54,6 +54,7 @@ var searchForScore = async function(results, answersString){
             return row.spain;
         }
     }
+    return 0;
 };
 
 router.get('/getLastDaily', async function(req, res){

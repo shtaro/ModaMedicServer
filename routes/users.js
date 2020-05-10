@@ -205,8 +205,8 @@ router.post('/passwordChangeCheck/changePassword', async function (req, res) {
   });
 });
 
-router.get('/changeDB', async function (req, res) {
 /**
+router.get('/changeDB', async function (req, res) {
   await User.find({}, async function(err, users){
     if(err) throw err;
     for(const user of users){
@@ -282,7 +282,7 @@ router.get('/changeDB', async function (req, res) {
       });
     }
   });
-  **/
+
   await PermissionRequest.find({}, async function(err, users){
     if(err) throw err;
     for(const user of users){
@@ -299,7 +299,6 @@ router.get('/changeDB', async function (req, res) {
       });
     }
   });
-  /**
   await WeatherMetric.find({}, async function(err, users){
     if(err) throw err;
     for(const user of users){
@@ -308,18 +307,9 @@ router.get('/changeDB', async function (req, res) {
       });
     }
   });
-**/
   common(res, null, null, "done");
 });
-
-var RandomString = function () {
-  var text = "";
-  var possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-
-  for (var i = 0; i < 6; i++)
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  return text;
-};
+**/
 
 
 module.exports = router;

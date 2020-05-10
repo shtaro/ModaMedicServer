@@ -4,7 +4,7 @@ var User = require('../modules/User');
 var common = require('./common');
 var jwt = require('jsonwebtoken');
 var tempToken = "password";
-var service = require('../service');
+
 
 router.get('/getFirsts', async function(req, res) {
   var allUsers = await User.find({Type: ["patient"]}).lean().exec();
@@ -124,7 +124,8 @@ router.post('/askChangePassword', async function (req, res) {
       var options = {expiresIn: "300000ms"};
       var token = jwt.sign(payload, tempToken, options);
       common(res, err, err, token);
-    } else {
+    }
+    else {
       var error = {'message': 'User not exists'};
       common(res, error, error, null);
     }

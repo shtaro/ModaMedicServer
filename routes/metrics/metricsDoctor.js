@@ -12,14 +12,6 @@ var User = require('../../modules/User');
 var Permission = require('../../modules/Permission');
 var service = require('../../service');
 
-var checkTimes = function(start, end){
-    if (typeof(start) == 'undefined') {
-        start = 0;
-    }
-    if (typeof(end) == 'undefined') {
-        end = (new Date).getTime();
-    }
-};
 
 var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];

@@ -7,12 +7,6 @@ var service = require('../../service');
 var User = require('../../modules/User');
 var Permission = require('../../modules/Permission');
 
-var getDate = function (timestamp) {
-    date = new Date(timestamp).toISOString();
-    date_string = date.slice(0, 10) + ' ' + date.slice(-13, -8)
-    return date_string;
-};
-
 
 var findUsers = async function(firstName, lastName, doctorID){
     var usersID = [];
