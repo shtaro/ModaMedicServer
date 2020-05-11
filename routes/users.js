@@ -162,7 +162,8 @@ router.post('/forgotPassword', async function (req, res) {
 router.post('/checkVerification', async function(req, res){
   await User.getUserByUserID(service.hashElement(req.body.UserID), function (err,user) {
     if(user){
-      if(user.VerificationAnswer === req.body.VerificationAnswer && user.BirthDate === req.body.BirthDate){
+      var zeroBirth = new Date(req.body.BirthDate).setHours(0,0,0,0);
+      if(user.VerificationAnswer == req.body.VerificationAnswer && user.BirthDate == zeroBirth){
         var payload = {
           UserID: user.UserID, Type: user.Type
         };
