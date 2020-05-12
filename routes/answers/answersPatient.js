@@ -33,14 +33,13 @@ var getScore = async function (QuestionnaireID, Answers) {
             await Answers.forEach(function(answer){
                 answersString = answersString + (answer.AnswerID[0]).toString();
             });
-            try {
-                var results = await csv().fromFile("C:\\Users\\User\\WebstormProjects\\ModaMedicServer\\eq5dCalc.csv");
-                score = await searchForScore(results, answersString);
-                break;
+            var results = await csv().fromFile("C:\\Users\\User\\WebstormProjects\\ModaMedicServer\\eq5dCalc.csv");
+            score = await searchForScore(results, answersString);
+            if(score == null){
+                var exception = {'message': 'Invalid Answer'};
+                throw exception;
             }
-            catch(exception){
-               return exception;
-            }
+            break;
         case 6:
             score = Answers[0].AnswerID[0];
             break;
@@ -54,7 +53,7 @@ var searchForScore = async function(results, answersString){
             return row.spain;
         }
     }
-    return 0;
+    return null;
 };
 
 router.get('/getLastDaily', async function(req, res){
