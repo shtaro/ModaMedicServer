@@ -23,6 +23,7 @@ module.exports.findMostRecent = function(docs, start, end){
     }
     var realEnd = (new Date(end)).setHours(23, 59, 0, 0);
     for(var temp = realStart; temp <= realEnd; temp += (24 * 3600 * 1000)){
+        temp = (new Date(temp)).setHours(0, 0, 0, 0);
         var docsPerDay = [];
         docs.forEach(function(doc){
             if(doc.ValidTime>= temp && doc.ValidTime< (temp + (24 * 3600 * 1000)))
