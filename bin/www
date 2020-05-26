@@ -7,19 +7,26 @@
 var app = require('../app');
 var debug = require('debug')('modamedic:server');
 var http = require('http');
+var https = require('https');
+var fs = require('fs');
+
+var httpsOptions = {
+  key: fs.readFileSync("C:\\Users\\User\\WebstormProjects\\ModaMedicServer\\key.pem"),
+  cert: fs.readFileSync("C:\\Users\\User\\WebstormProjects\\ModaMedicServer\\cert.pem")
+};
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '8103');
+var port = normalizePort(process.env.PORT || '8180');
 app.set('port', port);
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = https.createServer(httpsOptions, app);
 
 /**
  * Listen on provided port, on all network interfaces.
