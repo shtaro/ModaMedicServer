@@ -24,6 +24,15 @@ router.get('/getLasts', async function(req, res) {
   common(res, null, null, ans);
 });
 
+router.get('/getNames', async function(req, res) {
+  var allUsers = await User.find({Type: ["patient"]}).lean().exec();
+  var ans = [];
+  for await(const user of allUsers){
+    ans.push({first: user.First_Name, last: user.Last_Name});
+  }
+  common(res, null, null, ans);
+});
+
 
 router.get('/getUserQuestionnaire', async function(req, res) {
   var userid = "";
