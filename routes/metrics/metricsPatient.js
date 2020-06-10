@@ -104,9 +104,8 @@ router.post('/activity', async function (req, res, next) {
 router.get('/getMissingDates', async function (req, res, next){
     var userID = req.UserID;
     var days = req.query.days;
-    var now = new Date();
-    var realNow = now.getTime();
-    var start = now.setHours(-(24*days),0,0,0);
+    var realNow = new Date().setHours(-48,0,0,0);
+    var start = new Date().setHours(-(24*days),0,0,0);
     var ans = [];
     var docs = [];
     var dates= [];
@@ -140,43 +139,43 @@ var getRecordsBetweenDates = async function(userID, start, realNow, metric){
         case "Steps":
             docs = await StepsMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
         case "Calories":
             docs = await CaloriesMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
         case "Distance":
             docs = await DistanceMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
         case "Sleep":
             docs = await SleepMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
         case "Accelerometer":
             docs = await AccelerometerMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
         case "Weather":
             docs = await WeatherMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
         case "Activity":
             docs = await ActivityMetric.find({
                 UserID: userID,
-                ValidTime: { $gte: start, $lte: realNow }
+                ValidTime: { $gte: start, $lt: realNow }
             }).lean().exec();
             break;
     }
@@ -186,7 +185,7 @@ var getRecordsBetweenDates = async function(userID, start, realNow, metric){
 var findDates = function(start, realNow, docs){
     var temp;
     var dates = [];
-    for(temp = start; temp <= realNow; temp+=(24*3600*1000)) {
+    for(temp = start; temp < realNow; temp+=(24*3600*1000)) {
         var hasfound = false;
         var i;
         for (i=0; i<docs.length; i++) {
@@ -198,6 +197,9 @@ var findDates = function(start, realNow, docs){
         if (!hasfound)
             dates.push(temp);
     }
+    dates.push((new Date().setHours(-48,0,0,0)));
+    dates.push((new Date().setHours(-24,0,0,0)));
+    dates.push((new Date().setHours(0,0,0,0)));
     return dates;
 };
 
