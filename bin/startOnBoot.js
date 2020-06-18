@@ -17,7 +17,7 @@ svc.on('uninstall',function () {
     svc.stop();
 });
 
-svc.uninstall();
+svc.install();
 //svc.uninstall(); //change to this when want to REMOVE task and run locally
 
 
