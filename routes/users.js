@@ -188,129 +188,23 @@ router.use('/passwordChangeCheck', function (req, res, next) {
 });
 
 router.post('/passwordChangeCheck/changePassword', async function (req, res) {
-  await User.getUserByUserID(req.UserID, async function (err, user) {
-    if (err) {
-      var error = {'message': 'Error has occurred. Please try again.'};
-      common(res, error, 'Error has occurred. Please try again.', null);
-    }
-    else {
-      await User.changePassword(user, req.body.NewPassword, function (err) {
+      await User.getUserByUserID(req.UserID, async function (err, user) {
         if (err) {
           var error = {'message': 'Error has occurred. Please try again.'};
           common(res, error, 'Error has occurred. Please try again.', null);
-        } else {
-          common(res, false, "Password Changed", null);
         }
-      });
-    }
+        else {
+          await User.changePassword(user, req.body.NewPassword, function (err) {
+            if (err) {
+              var error = {'message': 'Error has occurred. Please try again.'};
+              common(res, error, 'Error has occurred. Please try again.', null);
+            } else {
+              common(res, false, "Password Changed", null);
+            }
+          });
+        }
   });
 });
-
-/**
-router.get('/changeDB', async function (req, res) {
-  await User.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await User.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-
-  await DailyAnswer.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await DailyAnswer.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-
-  await PeriodicAnswer.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await PeriodicAnswer.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-
-  await StepsMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await StepsMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await DistanceMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await DistanceMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await CaloriesMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await CaloriesMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await SleepMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await SleepMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await ActivityMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await ActivityMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await AccelerometerMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await AccelerometerMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-
-  await PermissionRequest.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await PermissionRequest.updateOne({DoctorID: user.DoctorID, PatientID:user.PatientID}, {DoctorID: service.hashElement(user.DoctorID), PatientID: service.hashElement(user.PatientID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await Permission.find({}, async function(err, users){
-    if(err) throw err;
-    for await (const user of users){
-      await Permission.updateOne({DoctorID: user.DoctorID, PatientID:user.PatientID}, {DoctorID: service.hashElement(user.DoctorID), PatientID: service.hashElement(user.PatientID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  await WeatherMetric.find({}, async function(err, users){
-    if(err) throw err;
-    for(const user of users){
-      await WeatherMetric.updateOne({UserID: user.UserID}, {UserID: service.hashElement(user.UserID)}, function (err) {
-        if(err) throw err;
-      });
-    }
-  });
-  common(res, null, null, "done");
-});
-**/
 
 
 module.exports = router;

@@ -64,7 +64,6 @@ router.get('/getLastDaily', async function(req, res){
 });
 
 
-/* POST answers to daily */
 router.post('/sendAnswers', async function (req, res, next) {
     if(req.body.QuestionnaireID==0) {
         var newAnswer = new DailyAnswer({
